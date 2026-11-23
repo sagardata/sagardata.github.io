@@ -1,0 +1,2163 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- CUSTOMIZE: Update page title and meta description for SEO -->
+  <title>Sagar Mishra — Python AI & Automation Engineer · Automotive Bootloader Developer</title>
+  <meta name="description" content="Portfolio of Sagar Mishra — Python AI & Automation Engineer and Automotive Bootloader Developer at ZF Group (Hyderabad). Specializing in RAG pipelines, AI-assisted debugging, static analysis automation, and ISO 14229 UDS bootloaders." />
+
+  <!-- Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN for responsive layout utilities -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+          },
+          colors: {
+            obsidian: '#07090e',
+            panel: '#0d111a',
+            panelLight: '#131926',
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Restore saved accent theme before first paint to prevent flash -->
+  <script>
+    (function () {
+      try {
+        const saved = localStorage.getItem('sm-accent-theme') || 'violet';
+        document.documentElement.setAttribute('data-accent', saved);
+      } catch (e) {
+        document.documentElement.setAttribute('data-accent', 'violet');
+      }
+    })();
+  </script>
+
+  <style>
+    /* =========================================================================
+       ACCENT THEME TOKENS (Neural Violet | Cyber Cyan | Terminal Emerald)
+    ========================================================================= */
+    :root,
+    [data-accent="violet"] {
+      --accent: #8b5cf6;
+      --accent-bright: #a78bfa;
+      --accent-rgb: 139, 92, 246;
+      --accent-secondary: #38bdf8;
+      --accent-secondary-rgb: 56, 189, 248;
+    }
+
+    [data-accent="cyan"] {
+      --accent: #06b6d4;
+      --accent-bright: #22d3ee;
+      --accent-rgb: 6, 182, 212;
+      --accent-secondary: #818cf8;
+      --accent-secondary-rgb: 129, 140, 248;
+    }
+
+    [data-accent="emerald"] {
+      --accent: #10b981;
+      --accent-bright: #34d399;
+      --accent-rgb: 16, 185, 129;
+      --accent-secondary: #38bdf8;
+      --accent-secondary-rgb: 56, 189, 248;
+    }
+
+    /* Core Workbench Surfaces */
+    body {
+      background-color: #07090e;
+      color: #e2e8f0;
+    }
+
+    .bg-dot-grid {
+      background-image: radial-gradient(rgba(148, 163, 184, 0.14) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    /* Dynamic Accent Utilities */
+    .text-accent { color: var(--accent-bright); }
+    .bg-accent { background-color: var(--accent); }
+    .bg-accent-soft { background-color: rgba(var(--accent-rgb), 0.12); }
+    .border-accent-soft { border-color: rgba(var(--accent-rgb), 0.35); }
+    .ring-accent-soft { --tw-ring-color: rgba(var(--accent-rgb), 0.45); }
+
+    .accent-gradient-text {
+      background: linear-gradient(120deg, #ffffff 10%, var(--accent-bright) 60%, var(--accent-secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .accent-btn {
+      background: linear-gradient(135deg, var(--accent), rgba(var(--accent-rgb), 0.78));
+      box-shadow: 0 8px 28px -6px rgba(var(--accent-rgb), 0.45);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    }
+    .accent-btn:hover {
+      filter: brightness(1.1);
+      box-shadow: 0 10px 32px -4px rgba(var(--accent-rgb), 0.6);
+      transform: translateY(-1px);
+    }
+
+    /* Glassmorphic Workbench Cards + Mouse-Tracking Spotlight Glow */
+    .spotlight-card {
+      position: relative;
+      background: rgba(13, 17, 26, 0.78);
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      overflow: hidden;
+      transition: border-color 0.25s ease, transform 0.25s ease;
+    }
+
+    .spotlight-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1px;
+      background: radial-gradient(
+        420px circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
+        rgba(var(--accent-rgb), 0.65),
+        transparent 55%
+      );
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .spotlight-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        380px circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
+        rgba(var(--accent-rgb), 0.08),
+        transparent 60%
+      );
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .spotlight-card:hover::before,
+    .spotlight-card:hover::after {
+      opacity: 1;
+    }
+
+    .spotlight-card:hover {
+      border-color: rgba(var(--accent-rgb), 0.32);
+    }
+
+    /* Scroll-Reveal Animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Terminal Scrollbar & Cursor */
+    .terminal-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+    .terminal-scroll::-webkit-scrollbar-track { background: transparent; }
+    .terminal-scroll::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.22);
+      border-radius: 9999px;
+    }
+    .terminal-scroll::-webkit-scrollbar-thumb:hover {
+      background: rgba(var(--accent-rgb), 0.5);
+    }
+
+    /* Drawer Transitions */
+    .drawer-backdrop {
+      transition: opacity 0.28s ease;
+    }
+    .drawer-panel {
+      transition: transform 0.34s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Subtle Pulse Ring */
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(var(--accent-rgb), 0.45); }
+      50% { box-shadow: 0 0 0 6px rgba(var(--accent-rgb), 0); }
+    }
+    .pulse-accent {
+      animation: pulseGlow 2.4s infinite;
+    }
+  </style>
+</head>
+
+<body id="top" class="font-sans antialiased selection:bg-violet-500/30 selection:text-white overflow-x-hidden">
+
+  <!-- Ambient Workbench Background Layers -->
+  <div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+    <div class="absolute inset-0 bg-dot-grid opacity-70 [mask-image:radial-gradient(ellipse_at_top,white_25%,transparent_75%)]"></div>
+    <div id="ambient-glow-1" class="absolute -top-40 left-1/4 w-[42rem] h-[26rem] rounded-full blur-[120px] opacity-20 transition-colors duration-500" style="background: var(--accent);"></div>
+    <div id="ambient-glow-2" class="absolute top-1/3 -right-32 w-[32rem] h-[24rem] rounded-full blur-[130px] opacity-10 transition-colors duration-500" style="background: var(--accent-secondary);"></div>
+  </div>
+
+  <!-- =========================================================================
+       STICKY WORKBENCH NAVIGATION BAR
+  ========================================================================= -->
+  <header class="sticky top-0 z-40 border-b border-slate-800/80 bg-[#07090e]/80 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
+
+      <!-- Left: Brand Identity -->
+      <a href="#top" class="flex items-center gap-3 group focus:outline-none">
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center font-mono font-bold text-xs text-white border border-accent-soft bg-accent-soft group-hover:scale-105 transition-transform">
+          SM<span class="text-accent">_</span>
+        </div>
+        <div class="leading-tight">
+          <div class="text-sm font-bold tracking-tight text-white flex items-center gap-1.5">
+            Sagar Mishra
+            <span class="hidden sm:inline-block font-mono text-[10px] px-1.5 py-0.5 rounded bg-accent-soft text-accent border border-accent-soft">v2.6</span>
+          </div>
+          <div class="text-[11px] font-mono text-slate-400 hidden sm:block">AI Systems · Bootloader Workbench</div>
+        </div>
+      </a>
+
+      <!-- Center: Desktop Navigation -->
+      <nav class="hidden lg:flex items-center gap-1" aria-label="Main Navigation">
+        <a href="#overview" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-800/70 transition-colors">Overview</a>
+        <a href="#systems" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-800/70 transition-colors">Systems</a>
+        <a href="#stack" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-800/70 transition-colors">Stack</a>
+        <a href="#experience" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-800/70 transition-colors">Experience</a>
+        <a href="#contact" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-800/70 transition-colors">Contact</a>
+      </nav>
+
+      <!-- Right: Accent Switcher, Cmd+K Trigger, Mobile Menu -->
+      <div class="flex items-center gap-2">
+        <!-- Accent Theme Switcher Pills -->
+        <div class="hidden sm:flex items-center gap-1 p-1 rounded-xl border border-slate-800 bg-panel/90" role="group" aria-label="Accent Theme Switcher">
+          <button type="button" data-set-accent="violet" title="Neural Violet" class="accent-dot w-6 h-6 rounded-lg flex items-center justify-center hover:bg-slate-800 transition-colors">
+            <span class="w-2.5 h-2.5 rounded-full bg-violet-500"></span>
+          </button>
+          <button type="button" data-set-accent="cyan" title="Cyber Cyan" class="accent-dot w-6 h-6 rounded-lg flex items-center justify-center hover:bg-slate-800 transition-colors">
+            <span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
+          </button>
+          <button type="button" data-set-accent="emerald" title="Terminal Emerald" class="accent-dot w-6 h-6 rounded-lg flex items-center justify-center hover:bg-slate-800 transition-colors">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+          </button>
+        </div>
+
+        <!-- Cmd+K Command Palette Trigger -->
+        <button
+          id="open-cmdk-btn"
+          type="button"
+          class="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-slate-800 bg-panel/90 hover:border-accent-soft text-xs font-mono text-slate-300 hover:text-white transition-all"
+          aria-label="Open Command Palette"
+        >
+          <svg class="w-3.5 h-3.5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <span class="hidden md:inline">Command</span>
+          <kbd class="px-1.5 py-0.5 text-[10px] rounded bg-slate-800/90 border border-slate-700 text-slate-300">⌘K</kbd>
+        </button>
+
+        <!-- Mobile Menu Button -->
+        <button
+          id="mobile-menu-btn"
+          type="button"
+          aria-label="Toggle Menu"
+          aria-expanded="false"
+          class="lg:hidden p-2 rounded-xl border border-slate-800 bg-panel text-slate-300 hover:text-white"
+        >
+          <svg id="menu-icon-open" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg id="menu-icon-close" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-drawer" class="hidden lg:hidden border-t border-slate-800 bg-[#07090e]/95 backdrop-blur-xl">
+      <div class="px-4 py-4 space-y-2">
+        <a href="#overview" class="mobile-nav-link block px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800/70">Overview &amp; Impact</a>
+        <a href="#systems" class="mobile-nav-link block px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800/70">Featured Systems</a>
+        <a href="#stack" class="mobile-nav-link block px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800/70">Technical Stack</a>
+        <a href="#experience" class="mobile-nav-link block px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800/70">Experience &amp; Education</a>
+        <a href="#contact" class="mobile-nav-link block px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800/70">Contact</a>
+        <div class="pt-3 mt-2 border-t border-slate-800 flex items-center justify-between">
+          <span class="text-xs font-mono text-slate-400">Accent Theme</span>
+          <div class="flex items-center gap-2">
+            <button type="button" data-set-accent="violet" class="px-2.5 py-1 rounded-lg text-xs font-mono bg-violet-500/15 text-violet-300 border border-violet-500/30">Violet</button>
+            <button type="button" data-set-accent="cyan" class="px-2.5 py-1 rounded-lg text-xs font-mono bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">Cyan</button>
+            <button type="button" data-set-accent="emerald" class="px-2.5 py-1 rounded-lg text-xs font-mono bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">Emerald</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- =========================================================================
+         1. HERO SECTION + INTERACTIVE ENGINEERING WORKBENCH
+    ========================================================================= -->
+    <section class="pt-10 pb-16 lg:pt-16 lg:pb-24">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+
+        <!-- Left Column: Positioning & Narrative (70% Python AI/Debug, 30% Bootloader) -->
+        <div class="lg:col-span-6 space-y-6 pt-2">
+          <!-- Live Location & Role Pill -->
+          <div class="inline-flex flex-wrap items-center gap-2.5 px-3.5 py-1.5 rounded-full border border-accent-soft bg-accent-soft text-xs font-mono text-accent reveal">
+            <span class="w-2 h-2 rounded-full bg-accent pulse-accent"></span>
+            <span>ZF Group · CDAIW6</span>
+            <span class="text-slate-500">|</span>
+            <span>Hyderabad, IN · <span id="hero-ist-clock" class="text-slate-200">--:--:-- IST</span></span>
+          </div>
+
+          <!-- Primary Headline -->
+          <div class="space-y-3 reveal">
+            <p class="font-mono text-xs sm:text-sm uppercase tracking-widest text-slate-400">
+              Python AI &amp; Automation Engineer <span class="text-accent">·</span> Automotive Bootloader Developer
+            </p>
+            <h1 class="text-4xl sm:text-5xl xl:text-[3.35rem] font-extrabold tracking-tight leading-[1.08] text-white">
+              Building <span class="accent-gradient-text">AI Debugging Systems</span> &amp; Production Bootloaders.
+            </h1>
+          </div>
+
+          <!-- Value Proposition -->
+          <p class="text-base sm:text-lg text-slate-400 leading-relaxed max-w-xl reveal">
+            I engineer <span class="text-slate-200 font-medium">Python AI tooling, semantic codebase RAG pipelines, and automated static-analysis debugging workflows</span> that turn hours of manual root-cause triage into seconds — backed by deep production ownership of <span class="text-slate-200 font-medium">ISO 14229 UDS automotive bootloaders</span>.
+          </p>
+
+          <!-- Focus Distribution Bar (Visualizes 70% Python AI/Debug · 30% Bootloader) -->
+          <div class="p-4 rounded-2xl border border-slate-800/90 bg-panel/70 max-w-xl reveal">
+            <div class="flex items-center justify-between text-[11px] font-mono mb-2">
+              <span class="text-accent font-semibold">70% · Python AI, RAG &amp; Debug Automation</span>
+              <span class="text-sky-400">30% · Bootloader &amp; UDS</span>
+            </div>
+            <div class="w-full h-2 rounded-full bg-slate-800/90 overflow-hidden flex">
+              <div class="h-full w-[70%] bg-accent transition-colors duration-300"></div>
+              <div class="h-full w-[30%] bg-sky-400/80"></div>
+            </div>
+          </div>
+
+          <!-- Hero CTA Actions -->
+          <div class="flex flex-wrap items-center gap-3.5 pt-1 reveal">
+            <a href="#systems" class="accent-btn inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-white font-semibold text-sm">
+              Explore Systems
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </a>
+
+            <!-- CUSTOMIZE: Place resume.pdf in your GitHub Pages repo root -->
+            <a
+              id="resume-download-btn"
+              href="./resume.pdf"
+              download="Sagar_Mishra_Resume.pdf"
+              class="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl border border-slate-700/80 bg-panel/80 hover:border-accent-soft text-slate-200 hover:text-white font-semibold text-sm transition-all"
+            >
+              <svg class="w-4 h-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              Resume PDF
+            </a>
+
+            <button
+              type="button"
+              id="hero-run-rag-btn"
+              class="inline-flex items-center gap-2 px-4 py-3.5 rounded-xl border border-slate-800 bg-slate-900/60 hover:border-accent-soft text-xs font-mono text-slate-300 hover:text-accent transition-all"
+            >
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              Run AI Trace
+            </button>
+          </div>
+        </div>
+
+        <!-- Right Column: Interactive Engineering Workbench -->
+        <div class="lg:col-span-6 reveal">
+          <div class="rounded-2xl border border-slate-800/90 bg-[#0b0f18]/95 shadow-2xl shadow-black/60 overflow-hidden backdrop-blur-xl">
+
+            <!-- Workbench Top Window Chrome + Tab Switcher -->
+            <div class="px-4 py-3 border-b border-slate-800/90 bg-[#0f1420] flex flex-wrap items-center justify-between gap-2">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-rose-500/80"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-400/80"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400/80"></span>
+                <span class="ml-2 font-mono text-[11px] text-slate-400 hidden sm:inline">sagar@ai-workbench:~</span>
+              </div>
+
+              <!-- Tabs -->
+              <div class="inline-flex p-1 rounded-xl bg-slate-900/90 border border-slate-800" role="tablist">
+                <button
+                  id="tab-btn-console"
+                  type="button"
+                  role="tab"
+                  aria-selected="true"
+                  class="workbench-tab px-3 py-1.5 rounded-lg text-[11px] font-mono font-semibold bg-accent-soft text-accent border border-accent-soft transition-all"
+                >
+                  AI Debug &amp; RAG Console
+                </button>
+                <button
+                  id="tab-btn-visualizer"
+                  type="button"
+                  role="tab"
+                  aria-selected="false"
+                  class="workbench-tab px-3 py-1.5 rounded-lg text-[11px] font-mono font-medium text-slate-400 hover:text-slate-200 border border-transparent transition-all"
+                >
+                  Live Visualizer
+                </button>
+              </div>
+            </div>
+
+            <!-- TAB 1: Interactive AI Debug & RAG CLI Terminal -->
+            <div id="workbench-panel-console" class="flex flex-col h-[410px]">
+              <div id="terminal-output" class="terminal-scroll flex-1 p-4 font-mono text-xs leading-relaxed overflow-y-auto space-y-2 text-slate-300">
+                <!-- Populated dynamically on boot -->
+              </div>
+
+              <!-- Quick-Click Suggestion Pills -->
+              <div class="px-4 py-2 border-t border-slate-800/80 bg-[#0d121d] flex flex-wrap items-center gap-1.5">
+                <span class="text-[10px] font-mono text-slate-500 mr-1">TRY:</span>
+                <button type="button" data-cmd="rag" class="cmd-pill px-2.5 py-1 rounded-md text-[11px] font-mono bg-accent-soft text-accent border border-accent-soft hover:brightness-125 transition">rag</button>
+                <button type="button" data-cmd="debug" class="cmd-pill px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-800/90 text-slate-200 border border-slate-700 hover:border-accent-soft transition">debug</button>
+                <button type="button" data-cmd="uds" class="cmd-pill px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-800/90 text-slate-200 border border-slate-700 hover:border-accent-soft transition">uds</button>
+                <button type="button" data-cmd="projects" class="cmd-pill px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-800/90 text-slate-200 border border-slate-700 hover:border-accent-soft transition">projects</button>
+                <button type="button" data-cmd="help" class="cmd-pill px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-800/90 text-slate-400 border border-slate-700/70 hover:text-white transition">help</button>
+              </div>
+
+              <!-- Interactive Input Line -->
+              <form id="terminal-form" class="px-4 py-3 border-t border-slate-800 bg-[#080b12] flex items-center gap-2">
+                <span class="font-mono text-xs text-accent font-bold shrink-0">❯</span>
+                <input
+                  id="terminal-input"
+                  type="text"
+                  autocomplete="off"
+                  spellcheck="false"
+                  placeholder="Type a command (rag, debug, uds, skills, whoami, clear)..."
+                  class="w-full bg-transparent text-xs font-mono text-white placeholder-slate-500 focus:outline-none"
+                />
+                <button type="submit" class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-800 text-slate-300 hover:text-white border border-slate-700">Run</button>
+              </form>
+            </div>
+
+            <!-- TAB 2: Live Visualizer (RAG Embedding Pipeline / CAN-Bus 500kbps) -->
+            <div id="workbench-panel-visualizer" class="hidden flex-col h-[410px]">
+              <!-- Visualizer Controls Bar -->
+              <div class="px-4 py-2.5 border-b border-slate-800/80 bg-[#0d121d] flex flex-wrap items-center justify-between gap-2">
+                <div class="inline-flex rounded-lg bg-slate-900 border border-slate-800 p-0.5">
+                  <button
+                    id="viz-mode-rag"
+                    type="button"
+                    class="px-2.5 py-1 rounded-md text-[11px] font-mono font-semibold bg-accent-soft text-accent transition"
+                  >
+                    RAG &amp; Embedding Pipeline
+                  </button>
+                  <button
+                    id="viz-mode-can"
+                    type="button"
+                    class="px-2.5 py-1 rounded-md text-[11px] font-mono font-medium text-slate-400 hover:text-slate-200 transition"
+                  >
+                    CAN-Bus 500kbps
+                  </button>
+                </div>
+
+                <div class="flex items-center gap-2">
+                  <span id="viz-metric-badge" class="font-mono text-[11px] text-emerald-400">14.2 ms · cos 0.94</span>
+                  <button
+                    id="viz-pause-btn"
+                    type="button"
+                    class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-800 text-slate-200 border border-slate-700 hover:border-accent-soft"
+                  >
+                    Pause
+                  </button>
+                </div>
+              </div>
+
+              <!-- Responsive HTML5 Canvas Container -->
+              <div id="viz-canvas-wrap" class="relative flex-1 bg-[#070a11] min-h-[210px]">
+                <canvas id="telemetry-canvas" class="block w-full h-full"></canvas>
+              </div>
+
+              <!-- Live Telemetry Log Feed -->
+              <div class="h-[118px] border-t border-slate-800/90 bg-[#080b12] p-3 font-mono text-[11px] overflow-hidden flex flex-col">
+                <div class="flex items-center justify-between text-[10px] text-slate-500 mb-1.5">
+                  <span id="viz-feed-title">LIVE VECTOR STREAM // sentence-transformers/all-MiniLM-L6-v2</span>
+                  <span class="text-emerald-400 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>STREAMING</span>
+                </div>
+                <div id="viz-log-feed" class="space-y-1 text-slate-300 overflow-hidden"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         2. SPOTLIGHT BENTO GRID (OVERVIEW & IMPACT)
+    ========================================================================= -->
+    <section id="overview" class="py-16 border-t border-slate-800/80">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 reveal">
+        <div>
+          <span class="font-mono text-xs uppercase tracking-widest text-accent font-semibold">01 / Telemetry &amp; Impact</span>
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-white mt-1.5">Engineering Overview</h2>
+        </div>
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 text-xs font-mono self-start sm:self-auto">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          Open to AI &amp; Systems Engineering discussions
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
+
+        <!-- Tile 1: Verified Automation Savings (€31K+) -->
+        <div class="spotlight-card md:col-span-4 rounded-2xl p-6 reveal">
+          <div class="flex items-center justify-between mb-4">
+            <span class="font-mono text-[11px] uppercase tracking-wider text-slate-400">Verified Cost Impact</span>
+            <span class="px-2 py-0.5 rounded-md font-mono text-[10px] bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">CodeInsight Studio</span>
+          </div>
+          <div class="text-4xl sm:text-5xl font-extrabold font-mono text-white tracking-tight">
+            €<span class="kpi-counter" data-target="31">0</span>K<span class="text-accent">+</span>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-400 mt-3 leading-relaxed">
+            Verified engineering savings by automating Polyspace static analysis &amp; VectorCAST unit-test triage into executive PDF reports.
+          </p>
+        </div>
+
+        <!-- Tile 2: RAG + AI Codebase Intelligence -->
+        <div class="spotlight-card md:col-span-4 rounded-2xl p-6 reveal">
+          <div class="flex items-center justify-between mb-4">
+            <span class="font-mono text-[11px] uppercase tracking-wider text-slate-400">Primary Engineering Focus</span>
+            <span class="px-2 py-0.5 rounded-md font-mono text-[10px] bg-accent-soft text-accent border border-accent-soft">Python · AI</span>
+          </div>
+          <div class="text-4xl sm:text-5xl font-extrabold font-mono text-white tracking-tight">
+            RAG <span class="text-accent">+</span> AI
+          </div>
+          <p class="text-xs sm:text-sm text-slate-400 mt-3 leading-relaxed">
+            Semantic codebase indexing, vector search (<span class="font-mono text-slate-200">sentence-transformers</span>), and AI-assisted root-cause debugging for multi-repo firmware.
+          </p>
+        </div>
+
+        <!-- Tile 3: Bootloader Ownership (100%) -->
+        <div class="spotlight-card md:col-span-4 rounded-2xl p-6 reveal">
+          <div class="flex items-center justify-between mb-4">
+            <span class="font-mono text-[11px] uppercase tracking-wider text-slate-400">OEM Firmware Ownership</span>
+            <span class="px-2 py-0.5 rounded-md font-mono text-[10px] bg-sky-500/10 text-sky-300 border border-sky-500/20">ISO 14229 UDS</span>
+          </div>
+          <div class="text-4xl sm:text-5xl font-extrabold font-mono text-white tracking-tight">
+            <span class="kpi-counter" data-target="100">0</span><span class="text-sky-400">%</span>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-400 mt-3 leading-relaxed">
+            Sole end-to-end development of the Mahindra OEM automotive bootloader, custom <span class="font-mono text-slate-200">0x27</span> security access, and MISRA-C compliance.
+          </p>
+        </div>
+
+        <!-- Tile 4: Workbench Approach (Wide) -->
+        <div class="spotlight-card md:col-span-8 rounded-2xl p-6 reveal">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+            <h3 class="text-base font-bold text-white">Bridging AI Intelligence with Mission-Critical Embedded Systems</h3>
+            <span class="font-mono text-[11px] text-accent">Python-First Architecture</span>
+          </div>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            Most automotive teams treat debugging, static analysis, and documentation search as slow manual chores. I build Python-native AI platforms — combining local embeddings, automated log/artifact parsers, and Azure DevOps integrations — to give embedded engineers instant diagnostic clarity while keeping production ECU code rock-solid.
+          </p>
+          <div class="grid grid-cols-3 gap-3 mt-5 pt-4 border-t border-slate-800/80 font-mono text-xs">
+            <div>
+              <div class="text-slate-500 text-[10px] uppercase">AI &amp; Search</div>
+              <div class="text-slate-200 mt-0.5">RAG · Local LLMs</div>
+            </div>
+            <div>
+              <div class="text-slate-500 text-[10px] uppercase">V&amp;V Automation</div>
+              <div class="text-slate-200 mt-0.5">Polyspace · VectorCAST</div>
+            </div>
+            <div>
+              <div class="text-slate-500 text-[10px] uppercase">ECU Stack</div>
+              <div class="text-slate-200 mt-0.5">UDS · Bootloader</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tile 5: Live Hyderabad IST Clock & Location -->
+        <div class="spotlight-card md:col-span-4 rounded-2xl p-6 flex flex-col justify-between reveal">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-[11px] uppercase tracking-wider text-slate-400">Base Station</span>
+            <span class="font-mono text-[10px] text-slate-500">UTC+05:30</span>
+          </div>
+          <div class="my-4">
+            <div id="bento-ist-clock" class="font-mono text-3xl font-bold text-white tracking-wider">--:--:--</div>
+            <div id="bento-ist-date" class="font-mono text-xs text-accent mt-1">Hyderabad, India (IST)</div>
+          </div>
+          <div class="flex items-center justify-between text-xs text-slate-400 pt-3 border-t border-slate-800/80">
+            <span>ZF Group · CDAIW6</span>
+            <span class="font-mono text-emerald-400">● Online</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         3. FEATURED SYSTEMS / PROJECTS (AI & PYTHON FIRST, BOOTLOADER SECOND)
+    ========================================================================= -->
+    <section id="systems" class="py-16 border-t border-slate-800/80">
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10 reveal">
+        <div>
+          <span class="font-mono text-xs uppercase tracking-widest text-accent font-semibold">02 / Engineered Systems</span>
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-white mt-1.5">Featured Systems &amp; Architecture</h2>
+          <p class="text-sm text-slate-400 mt-2 max-w-2xl">
+            Ordered by primary focus — Python AI, RAG search, and debugging automation first, followed by automotive bootloader engineering. Click any system to inspect its architecture dossier.
+          </p>
+        </div>
+
+        <!-- Category Filter Tabs -->
+        <div class="inline-flex flex-wrap gap-1.5 p-1.5 rounded-xl border border-slate-800 bg-panel/90 self-start" role="tablist" aria-label="Filter projects">
+          <button type="button" data-proj-filter="all" class="proj-filter-btn px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-accent-soft text-accent border border-accent-soft transition">All Systems</button>
+          <button type="button" data-proj-filter="python-ai" class="proj-filter-btn px-3 py-1.5 rounded-lg text-xs font-mono text-slate-400 hover:text-white border border-transparent transition">Python &amp; AI</button>
+          <button type="button" data-proj-filter="debug-auto" class="proj-filter-btn px-3 py-1.5 rounded-lg text-xs font-mono text-slate-400 hover:text-white border border-transparent transition">Debug &amp; Automation</button>
+          <button type="button" data-proj-filter="bootloader" class="proj-filter-btn px-3 py-1.5 rounded-lg text-xs font-mono text-slate-400 hover:text-white border border-transparent transition">Bootloader &amp; Embedded</button>
+        </div>
+      </div>
+
+      <!-- 5 Flagship Project Cards Grid -->
+      <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <!-- Rendered dynamically from JS data so cards & slide-over dossiers stay 100% in sync -->
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         4. TECHNICAL STACK MATRIX (INTERACTIVE DOMAIN FILTER)
+    ========================================================================= -->
+    <section id="stack" class="py-16 border-t border-slate-800/80">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 reveal">
+        <div>
+          <span class="font-mono text-xs uppercase tracking-widest text-accent font-semibold">03 / Capabilities</span>
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-white mt-1.5">Technical Stack Matrix</h2>
+          <p class="text-sm text-slate-400 mt-2 max-w-xl">
+            Filter by engineering domain to inspect my primary Python AI &amp; debugging stack alongside embedded bootloader technologies.
+          </p>
+        </div>
+
+        <div class="inline-flex flex-wrap gap-1.5 p-1.5 rounded-xl border border-slate-800 bg-panel/90 self-start">
+          <button type="button" data-stack-filter="all" class="stack-filter-btn px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-accent-soft text-accent border border-accent-soft transition">All Domains</button>
+          <button type="button" data-stack-filter="ai" class="stack-filter-btn px-3 py-1.5 rounded-lg text-xs font-mono text-slate-400 hover:text-white border border-transparent transition">Python &amp; AI</button>
+          <button type="button" data-stack-filter="debug" class="stack-filter-btn px-3 py-1.5 rounded-lg text-xs font-mono text-slate-400 hover:text-white border border-transparent transition">Debug &amp; V&amp;V</button>
+          <button type="button" data-stack-filter="embedded" class="stack-filter-btn px-3 py-1.5 rounded-lg text-xs font-mono text-slate-400 hover:text-white border border-transparent transition">Bootloader</button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+
+        <!-- Domain 1: Python & AI Engineering (Primary) -->
+        <div data-stack-group="ai" class="stack-card spotlight-card rounded-2xl p-6 reveal">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-accent-soft border border-accent-soft flex items-center justify-center text-accent">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-base font-bold text-white">Python &amp; AI Engineering</h3>
+                <p class="font-mono text-[11px] text-accent">Primary Focus</p>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2 mt-4">
+            <span class="px-3 py-1.5 rounded-lg text-xs font-mono bg-slate-900/90 text-slate-200 border border-slate-800">Python</span>
+            <span class="px-3 py-1.5 rounded-lg text-xs font-mono bg-slate-900/90 text-slate-200 border border-slate-800">RAG Pipelines</span>
+            <span class="px-3 py-1.5 rounded-lg text-xs font-mono bg-slate-900/90 text-slate-200 border border-slate-800">sentence-transformers</span>
+            <span class="px-3 py-1.5 rounded-lg text-xs font-mono bg-slate-900/90 text-slate-200 border border-slate-800">Streamlit</span>
+            <span class="px-3 py-1.5 rounded-lg text-xs font-mono bg-slate-900/90 text-slate-200 border border-slate-800">Local LLMs / Code Assistants</span>
+            <span class="px-3 py-1.5 rounded-lg text-xs font-mono bg-slate-900/90 text-slate-200 border border-slate-800">aiohttp</span>
+            <span class="px-3 py-1.5 rounded-lg text-xs font-mono bg-slate-900/90 text-slate-200 border border-slate-800">BeautifulSoup</span>
+          </div>
+        </div>
+
+        <!-- Domain 2: Debugging, V&V & Automation -->
+        <div data-stack-group="debug" class="stack-card spotlight-card rounded-2xl p-6 reveal">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-base font-bold text-white">Debugging, V&amp;V &amp; Automation</h3>
+                <p class="font-mono text-[11px] text-emerald-400">Quality &amp; Triage</p>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2 mt-4">
+            <span class="px-3 py-1.5 rounded-lg text-xs font-mono bg-slate-900/90 text-slate-200 border border-slate-800">Static Analysis Parsing</span>
+            <span class="px-3 py-1.5 rounded-lg text-xs font-mono bg-slate-900/90 text-slate-200 border border-slate-800">Polyspace</span>
+            <span class="px-3 py-1.5 rounded-lg text-xs font-mono bg-slate-900/90 text-slate-200 border border-slate-800">VectorCAST</span>
+            <span class="px-3 py-1.5 rounded-lg text-xs font-mono bg-slate-900/90 text-slate-200 border border-slate-800">Automated Test Generation</span>
+            <span class="px-3 py-1.5 rounded-lg text-xs font-mono bg-slate-900/90 text-slate-200 border border-slate-800">Azure DevOps Integration</span>
+            <span class="px-3 py-1.5 rounded-lg text-xs font-mono bg-slate-900/90 text-slate-200 border border-slate-800">Power Apps / SharePoint</span>
+          </div>
+        </div>
+
+        <!-- Domain 3: Bootloader & Embedded Systems (Secondary) -->
+        <div data-stack-group="embedded" class="stack-card spotlight-card rounded-2xl p-6 reveal">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-500/30 flex items-center justify-center text-sky-400">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-base font-bold text-white">Bootloader &amp; Embedded</h3>
+                <p class="font-mono text-[11px] text-sky-400">ECU &amp; Diagnostics</p>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2 mt-4">
+            <span class="px-3 py-1.5 rounded-lg text-xs font-mono bg-slate-900/90 text-slate-200 border border-slate-800">Embedded C / C++</span>
+            <span class="px-3 py-1.5 rounded-lg text-xs font-mono bg-slate-900/90 text-slate-200 border border-slate-800">ISO 14229 (UDS)</span>
+            <span class="px-3 py-1.5 rounded-lg text-xs font-mono bg-slate-900/90 text-slate-200 border border-slate-800">CAN / CAPL</span>
+            <span class="px-3 py-1.5 rounded-lg text-xs font-mono bg-slate-900/90 text-slate-200 border border-slate-800">Vector CANoe / CANalyzer</span>
+            <span class="px-3 py-1.5 rounded-lg text-xs font-mono bg-slate-900/90 text-slate-200 border border-slate-800">MISRA-C</span>
+            <span class="px-3 py-1.5 rounded-lg text-xs font-mono bg-slate-900/90 text-slate-200 border border-slate-800">Security Access (0x27)</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         5. EXPERIENCE & EDUCATION TIMELINE
+    ========================================================================= -->
+    <section id="experience" class="py-16 border-t border-slate-800/80">
+      <div class="mb-10 reveal">
+        <span class="font-mono text-xs uppercase tracking-widest text-accent font-semibold">04 / Trajectory</span>
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-white mt-1.5">Experience &amp; Education</h2>
+      </div>
+
+      <div class="relative pl-6 sm:pl-8 border-l border-slate-800 space-y-6">
+
+        <!-- Role 1: Engineer 1 -->
+        <div class="relative reveal">
+          <span class="absolute -left-[31px] sm:-left-[39px] top-6 w-3.5 h-3.5 rounded-full bg-accent ring-4 ring-[#07090e]"></span>
+          <div class="spotlight-card rounded-2xl p-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <h3 class="text-lg font-bold text-white">Engineer 1</h3>
+                <p class="text-sm font-mono text-accent">ZF Group · CDAIW6 Team · Hyderabad, India</p>
+              </div>
+              <span class="inline-flex self-start px-3 py-1 rounded-full font-mono text-xs bg-accent-soft text-accent border border-accent-soft">
+                Apr 2025 – Present
+              </span>
+            </div>
+            <ul class="mt-4 space-y-2 text-sm text-slate-400">
+              <li class="flex items-start gap-2.5"><span class="text-accent mt-1">▸</span><span>Architecting Python AI debugging assistants, semantic codebase RAG search (<span class="font-mono text-slate-200">AI Cortex</span>), and the <span class="font-mono text-slate-200">Atlas System</span> engineering platform.</span></li>
+              <li class="flex items-start gap-2.5"><span class="text-accent mt-1">▸</span><span>Delivered <span class="text-emerald-300 font-semibold">€31K+</span> in verified automation savings through <span class="font-mono text-slate-200">CodeInsight Studio</span> for automated Polyspace &amp; VectorCAST verification reporting.</span></li>
+              <li class="flex items-start gap-2.5"><span class="text-accent mt-1">▸</span><span>Solely developed and maintained production Mahindra OEM automotive bootloader modules, ISO 14229 UDS diagnostic services, and custom <span class="font-mono text-slate-200">0x27</span> security access.</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Role 2: Engineering Intern -->
+        <div class="relative reveal">
+          <span class="absolute -left-[31px] sm:-left-[39px] top-6 w-3.5 h-3.5 rounded-full bg-sky-400 ring-4 ring-[#07090e]"></span>
+          <div class="spotlight-card rounded-2xl p-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <h3 class="text-lg font-bold text-white">Engineering Intern</h3>
+                <p class="text-sm font-mono text-sky-400">ZF Group · Hyderabad, India</p>
+              </div>
+              <span class="inline-flex self-start px-3 py-1 rounded-full font-mono text-xs bg-slate-800 text-slate-300 border border-slate-700">
+                Jan 2025 – Apr 2025
+              </span>
+            </div>
+            <p class="mt-3 text-sm text-slate-400 leading-relaxed">
+              Developed bootloader software modules, generalized Python Vector CANoe / CAPL diagnostic test generators, and internal automation utilities to eliminate repetitive manual V&amp;V workflows.
+            </p>
+          </div>
+        </div>
+
+        <!-- Education -->
+        <div class="relative reveal">
+          <span class="absolute -left-[31px] sm:-left-[39px] top-6 w-3.5 h-3.5 rounded-full bg-slate-500 ring-4 ring-[#07090e]"></span>
+          <div class="spotlight-card rounded-2xl p-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <h3 class="text-lg font-bold text-white">B.Tech in Computer Science Engineering</h3>
+                <!-- CUSTOMIZE: Update with your university name and graduation year -->
+                <p class="text-sm font-mono text-slate-400">Computer Science &amp; Systems Engineering</p>
+              </div>
+              <span class="inline-flex self-start px-3 py-1 rounded-full font-mono text-xs bg-slate-800 text-slate-300 border border-slate-700">
+                Education
+              </span>
+            </div>
+            <p class="mt-3 text-sm text-slate-400 leading-relaxed">
+              Built a strong foundation in algorithms, systems programming, software engineering, and intelligent developer tooling.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         6. CONTACT SECTION
+    ========================================================================= -->
+    <section id="contact" class="py-16 border-t border-slate-800/80">
+      <div class="mb-10 reveal">
+        <span class="font-mono text-xs uppercase tracking-widest text-accent font-semibold">05 / Connect</span>
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-white mt-1.5">Initialize a Conversation</h2>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+        <!-- Left: Direct Contact & Links -->
+        <div class="lg:col-span-5 space-y-5 reveal">
+          <p class="text-sm sm:text-base text-slate-400 leading-relaxed">
+            Want to talk about Python AI engineering, RAG for codebases, automated debugging pipelines, or automotive UDS bootloaders? Reach out directly or send a message here.
+          </p>
+
+          <!-- Direct Email Card -->
+          <div class="spotlight-card rounded-2xl p-5">
+            <div class="font-mono text-[11px] uppercase tracking-wider text-slate-500 mb-2">Direct Channel</div>
+            <div class="flex items-center justify-between gap-3 flex-wrap">
+              <!-- CUSTOMIZE: Replace with your real email address (also update data-email below) -->
+              <a href="mailto:sagar.mishra@example.com" class="font-mono text-sm font-semibold text-white hover:text-accent transition-colors break-all">
+                sagar.mishra@example.com
+              </a>
+              <button
+                id="copy-email-btn"
+                type="button"
+                data-email="sagar.mishra@example.com"
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-900 text-xs font-mono text-slate-200 hover:border-accent-soft hover:text-accent transition"
+              >
+                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+                <span id="copy-email-label">Copy Email</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Social Links -->
+          <div class="flex flex-wrap gap-3">
+            <!-- CUSTOMIZE: Replace with your GitHub profile URL -->
+            <a
+              href="https://github.com/yourusername"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2.5 px-5 py-3 rounded-xl border border-slate-800 bg-panel hover:border-accent-soft text-sm font-semibold text-slate-200 hover:text-white transition"
+            >
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+              GitHub
+            </a>
+
+            <!-- CUSTOMIZE: Replace with your LinkedIn profile URL -->
+            <a
+              href="https://linkedin.com/in/yourusername"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2.5 px-5 py-3 rounded-xl border border-slate-800 bg-panel hover:border-accent-soft text-sm font-semibold text-slate-200 hover:text-white transition"
+            >
+              <svg class="w-4 h-4 text-accent" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: Validated Contact Form -->
+        <div class="lg:col-span-7 reveal">
+          <!--
+            CUSTOMIZE FOR GITHUB PAGES:
+            To receive real form submissions without a backend:
+            1. Sign up free at https://formspree.io or https://web3forms.com
+            2. Set action="https://formspree.io/f/YOUR_FORM_ID" method="POST" on the <form> below
+            3. In the JS submit handler, uncomment the fetch() call to POST your FormData.
+          -->
+          <form id="contact-form" novalidate class="spotlight-card rounded-2xl p-6 sm:p-7 space-y-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div>
+                <label for="cf-name" class="block font-mono text-[11px] uppercase tracking-wider text-slate-400 mb-2">Name</label>
+                <input
+                  id="cf-name"
+                  name="name"
+                  type="text"
+                  required
+                  placeholder="Your name"
+                  class="w-full px-4 py-3 rounded-xl border border-slate-800 bg-[#07090e] text-sm text-white placeholder-slate-500 focus:outline-none focus:border-accent-soft focus:ring-2 ring-accent-soft transition"
+                />
+                <p id="err-name" class="hidden mt-1.5 text-xs text-rose-400">Please enter your name.</p>
+              </div>
+              <div>
+                <label for="cf-email" class="block font-mono text-[11px] uppercase tracking-wider text-slate-400 mb-2">Email</label>
+                <input
+                  id="cf-email"
+                  name="email"
+                  type="email"
+                  required
+                  placeholder="you@company.com"
+                  class="w-full px-4 py-3 rounded-xl border border-slate-800 bg-[#07090e] text-sm text-white placeholder-slate-500 focus:outline-none focus:border-accent-soft focus:ring-2 ring-accent-soft transition"
+                />
+                <p id="err-email" class="hidden mt-1.5 text-xs text-rose-400">Please enter a valid email address.</p>
+              </div>
+            </div>
+
+            <div>
+              <label for="cf-message" class="block font-mono text-[11px] uppercase tracking-wider text-slate-400 mb-2">Message</label>
+              <textarea
+                id="cf-message"
+                name="message"
+                rows="4"
+                required
+                placeholder="Share details about your AI project, debugging challenge, or role..."
+                class="w-full px-4 py-3 rounded-xl border border-slate-800 bg-[#07090e] text-sm text-white placeholder-slate-500 focus:outline-none focus:border-accent-soft focus:ring-2 ring-accent-soft transition resize-y"
+              ></textarea>
+              <p id="err-message" class="hidden mt-1.5 text-xs text-rose-400">Please enter a message (at least 10 characters).</p>
+            </div>
+
+            <div id="cf-success" class="hidden p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs sm:text-sm flex items-start gap-3">
+              <svg class="w-5 h-5 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <div>
+                <div class="font-semibold">Transmission received!</div>
+                <div class="opacity-85 mt-0.5">Thanks for reaching out — I'll respond shortly.</div>
+              </div>
+            </div>
+
+            <button type="submit" class="accent-btn w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-white font-semibold text-sm">
+              Send Message
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+              </svg>
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================================
+       FOOTER
+  ========================================================================= -->
+  <footer class="border-t border-slate-800/80 py-8 mt-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-500">
+      <div>&copy; <span id="footer-year"></span> Sagar Mishra · AI Systems &amp; Embedded Workbench</div>
+      <div class="flex items-center gap-4">
+        <button type="button" id="footer-cmdk-btn" class="hover:text-accent transition-colors">Press ⌘K for Commands</button>
+        <span>·</span>
+        <a href="#top" class="hover:text-white transition-colors">Back to top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       SLIDE-OVER ENGINEERING DOSSIER DRAWER (WITH UNIQUE SVG ARCHITECTURES)
+  ========================================================================= -->
+  <div id="dossier-modal" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true" aria-labelledby="dossier-title">
+    <div id="dossier-backdrop" class="drawer-backdrop fixed inset-0 bg-black/75 backdrop-blur-sm opacity-0"></div>
+    <div class="fixed inset-y-0 right-0 max-w-full flex pl-6 sm:pl-12">
+      <div id="dossier-panel" class="drawer-panel translate-x-full w-screen max-w-xl bg-[#0b0f18] border-l border-slate-800 shadow-2xl flex flex-col h-full">
+
+        <!-- Drawer Header -->
+        <div class="px-6 py-5 border-b border-slate-800 flex items-start justify-between gap-4 bg-[#0e1320]">
+          <div>
+            <div class="flex items-center gap-2 mb-1.5">
+              <span id="dossier-code" class="font-mono text-[11px] font-bold px-2 py-0.5 rounded bg-accent-soft text-accent border border-accent-soft"></span>
+              <span id="dossier-category" class="font-mono text-[11px] text-slate-400"></span>
+            </div>
+            <h3 id="dossier-title" class="text-xl font-bold text-white"></h3>
+          </div>
+          <button id="dossier-close-btn" type="button" aria-label="Close dossier" class="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Drawer Body -->
+        <div class="terminal-scroll flex-1 overflow-y-auto p-6 space-y-6">
+          <!-- Custom Inline SVG Architecture Diagram -->
+          <div>
+            <div class="font-mono text-[10px] uppercase tracking-widest text-slate-500 mb-2">System Architecture Diagram</div>
+            <div id="dossier-svg" class="rounded-xl border border-slate-800 bg-[#070a11] p-4 overflow-x-auto"></div>
+          </div>
+
+          <!-- Measurable Impact Callout -->
+          <div class="p-4 rounded-xl border border-emerald-500/25 bg-emerald-500/10">
+            <div class="font-mono text-[10px] uppercase tracking-widest text-emerald-400 mb-1">Measurable Impact</div>
+            <p id="dossier-impact" class="text-sm font-medium text-emerald-200"></p>
+          </div>
+
+          <!-- Problem Statement -->
+          <div>
+            <h4 class="font-mono text-[11px] uppercase tracking-wider text-slate-400 mb-2">Problem Statement</h4>
+            <p id="dossier-problem" class="text-sm text-slate-300 leading-relaxed"></p>
+          </div>
+
+          <!-- Technical Highlights -->
+          <div>
+            <h4 class="font-mono text-[11px] uppercase tracking-wider text-slate-400 mb-2.5">Technical Architecture</h4>
+            <ul id="dossier-highlights" class="space-y-2.5 text-sm text-slate-300"></ul>
+          </div>
+
+          <!-- Tech Stack -->
+          <div>
+            <h4 class="font-mono text-[11px] uppercase tracking-wider text-slate-400 mb-2.5">Tech Stack</h4>
+            <div id="dossier-stack" class="flex flex-wrap gap-2"></div>
+          </div>
+        </div>
+
+        <!-- Drawer Footer -->
+        <div class="px-6 py-4 border-t border-slate-800 bg-[#0e1320] flex items-center justify-between gap-3">
+          <a id="dossier-github" href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-xs font-mono font-semibold text-slate-200 hover:text-accent transition">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            View Repository / Docs ↗
+          </a>
+          <button type="button" id="dossier-close-btn-2" class="px-4 py-2 rounded-lg text-xs font-mono bg-slate-800 text-slate-300 hover:text-white border border-slate-700">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       COMMAND PALETTE MODAL (Ctrl+K / Cmd+K)
+  ========================================================================= -->
+  <div id="cmdk-modal" class="fixed inset-0 z-50 hidden items-start justify-center pt-[12vh] px-4 bg-black/75 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="Command Palette">
+    <div class="w-full max-w-lg rounded-2xl border border-slate-800 bg-[#0c101a] shadow-2xl overflow-hidden">
+      <div class="px-4 py-3.5 border-b border-slate-800 flex items-center gap-3">
+        <svg class="w-4 h-4 text-accent shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        <input
+          id="cmdk-input"
+          type="text"
+          autocomplete="off"
+          placeholder="Type a command or search sections..."
+          class="w-full bg-transparent text-sm text-white placeholder-slate-500 focus:outline-none"
+        />
+        <kbd class="px-1.5 py-0.5 text-[10px] font-mono rounded bg-slate-800 text-slate-400 border border-slate-700">ESC</kbd>
+      </div>
+      <div id="cmdk-list" class="terminal-scroll max-h-80 overflow-y-auto p-2 space-y-1"></div>
+      <div class="px-4 py-2.5 border-t border-slate-800 bg-[#080b12] flex items-center justify-between text-[11px] font-mono text-slate-500">
+        <span>↑↓ Navigate · ↵ Select</span>
+        <span>Sagar Mishra Workbench</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       TOAST NOTIFICATION
+  ========================================================================= -->
+  <div
+    id="toast"
+    role="status"
+    aria-live="polite"
+    class="fixed bottom-5 right-5 z-50 max-w-sm px-4 py-3 rounded-xl border border-slate-700/80 bg-[#0d121d]/95 text-slate-100 text-xs font-mono shadow-2xl flex items-center gap-2.5 translate-y-20 opacity-0 pointer-events-none transition-all duration-300 backdrop-blur-md"
+  >
+    <span class="w-2 h-2 rounded-full bg-accent shrink-0"></span>
+    <span id="toast-msg"></span>
+  </div>
+
+  <!-- =========================================================================
+       PURE VANILLA JAVASCRIPT ENGINE
+  ========================================================================= -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+      /* -----------------------------------------------------------------------
+         1. UTILITIES: YEAR, TOAST, CLIPBOARD, IST CLOCK
+      ----------------------------------------------------------------------- */
+      document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+      const toastEl = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-msg');
+      let toastTimer;
+
+      function showToast(message) {
+        toastMsg.textContent = message;
+        toastEl.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+        toastEl.classList.add('translate-y-0', 'opacity-100');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toastEl.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+          toastEl.classList.remove('translate-y-0', 'opacity-100');
+        }, 3000);
+      }
+
+      function copyToClipboard(text, successMsg) {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'absolute';
+        ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          document.execCommand('copy');
+          showToast(successMsg || 'Copied to clipboard');
+          return true;
+        } catch (err) {
+          showToast('Copy failed — please copy manually.');
+          return false;
+        } finally {
+          document.body.removeChild(ta);
+        }
+      }
+
+      // Live Hyderabad IST Clock (Asia/Kolkata)
+      function updateISTClock() {
+        try {
+          const now = new Date();
+          const timeStr = new Intl.DateTimeFormat('en-IN', {
+            timeZone: 'Asia/Kolkata',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+          }).format(now);
+          const dateStr = new Intl.DateTimeFormat('en-IN', {
+            timeZone: 'Asia/Kolkata',
+            weekday: 'short',
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric'
+          }).format(now);
+
+          const heroClock = document.getElementById('hero-ist-clock');
+          const bentoClock = document.getElementById('bento-ist-clock');
+          const bentoDate = document.getElementById('bento-ist-date');
+          if (heroClock) heroClock.textContent = `${timeStr} IST`;
+          if (bentoClock) bentoClock.textContent = timeStr;
+          if (bentoDate) bentoDate.textContent = `Hyderabad, IN · ${dateStr}`;
+        } catch (e) {
+          // Graceful fallback if Intl timeZone unavailable
+        }
+      }
+      updateISTClock();
+      setInterval(updateISTClock, 1000);
+
+      /* -----------------------------------------------------------------------
+         2. ACCENT THEME SWITCHER (Violet | Cyan | Emerald)
+      ----------------------------------------------------------------------- */
+      const accentNames = {
+        violet: 'Neural Violet',
+        cyan: 'Cyber Cyan',
+        emerald: 'Terminal Emerald'
+      };
+
+      function setAccentTheme(theme, silent = false) {
+        if (!accentNames[theme]) theme = 'violet';
+        document.documentElement.setAttribute('data-accent', theme);
+        try {
+          localStorage.setItem('sm-accent-theme', theme);
+        } catch (e) {}
+
+        document.querySelectorAll('.accent-dot').forEach((btn) => {
+          const isMatch = btn.getAttribute('data-set-accent') === theme;
+          btn.classList.toggle('bg-slate-800', isMatch);
+          btn.classList.toggle('ring-1', isMatch);
+          btn.classList.toggle('ring-slate-600', isMatch);
+        });
+
+        if (!silent) showToast(`Theme switched → ${accentNames[theme]}`);
+      }
+
+      setAccentTheme(document.documentElement.getAttribute('data-accent') || 'violet', true);
+
+      document.querySelectorAll('[data-set-accent]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          setAccentTheme(btn.getAttribute('data-set-accent'));
+        });
+      });
+
+      /* -----------------------------------------------------------------------
+         3. MOBILE NAVIGATION DRAWER
+      ----------------------------------------------------------------------- */
+      const mobileBtn = document.getElementById('mobile-menu-btn');
+      const mobileDrawer = document.getElementById('mobile-drawer');
+      const menuOpenIcon = document.getElementById('menu-icon-open');
+      const menuCloseIcon = document.getElementById('menu-icon-close');
+
+      function toggleMobileDrawer(forceClose = false) {
+        const shouldOpen = forceClose ? false : mobileDrawer.classList.contains('hidden');
+        mobileDrawer.classList.toggle('hidden', !shouldOpen);
+        menuOpenIcon.classList.toggle('hidden', shouldOpen);
+        menuCloseIcon.classList.toggle('hidden', !shouldOpen);
+        mobileBtn.setAttribute('aria-expanded', String(shouldOpen));
+      }
+
+      mobileBtn.addEventListener('click', () => toggleMobileDrawer());
+      document.querySelectorAll('.mobile-nav-link').forEach((link) => {
+        link.addEventListener('click', () => toggleMobileDrawer(true));
+      });
+
+      /* -----------------------------------------------------------------------
+         4. MOUSE-TRACKING RADIAL SPOTLIGHT GLOW ON CARDS
+      ----------------------------------------------------------------------- */
+      function attachSpotlightListeners() {
+        document.querySelectorAll('.spotlight-card').forEach((card) => {
+          card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+            card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+          });
+        });
+      }
+
+      /* -----------------------------------------------------------------------
+         5. SCROLL-REVEAL & ANIMATED KPI COUNTERS
+      ----------------------------------------------------------------------- */
+      function animateCounter(el) {
+        const target = parseInt(el.getAttribute('data-target'), 10);
+        if (isNaN(target) || el.dataset.animated) return;
+        el.dataset.animated = 'true';
+        const duration = 1100;
+        const startTime = performance.now();
+
+        function step(now) {
+          const progress = Math.min((now - startTime) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          el.textContent = Math.round(eased * target);
+          if (progress < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              entry.target.querySelectorAll('.kpi-counter').forEach(animateCounter);
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: '0px 0px -24px 0px' }
+      );
+
+      document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
+
+      /* -----------------------------------------------------------------------
+         6. HERO WORKBENCH: INTERACTIVE AI DEBUG & RAG CLI CONSOLE
+      ----------------------------------------------------------------------- */
+      const termOut = document.getElementById('terminal-output');
+      const termForm = document.getElementById('terminal-form');
+      const termInput = document.getElementById('terminal-input');
+      let activeTimers = [];
+
+      function clearScheduledTimers() {
+        activeTimers.forEach((id) => clearTimeout(id));
+        activeTimers = [];
+      }
+
+      function appendLine(html, className = '') {
+        const div = document.createElement('div');
+        if (className) div.className = className;
+        div.innerHTML = html;
+        termOut.appendChild(div);
+        termOut.scrollTop = termOut.scrollHeight;
+      }
+
+      function scheduleLine(delay, html, className = '') {
+        const id = setTimeout(() => appendLine(html, className), delay);
+        activeTimers.push(id);
+      }
+
+      function bootTerminal() {
+        termOut.innerHTML = '';
+        appendLine('<span class="text-accent font-semibold">AI Systems &amp; Embedded Debug Workbench v2.6</span> <span class="text-slate-500">— Hyderabad/CDAIW6</span>');
+        appendLine('<span class="text-slate-400">Loaded modules:</span> <span class="text-emerald-400">cortex_rag.py</span> · <span class="text-sky-400">codeinsight_parser.py</span> · <span class="text-amber-300">uds_iso14229.c</span>');
+        appendLine('<span class="text-slate-500">Type <span class="text-slate-200">help</span> or click a pill below to run a live simulation.</span>');
+      }
+
+      function runCommand(raw) {
+        const cmd = raw.trim().toLowerCase();
+        if (!cmd) return;
+        clearScheduledTimers();
+
+        appendLine(`<div class="pt-1 border-t border-slate-800/60"><span class="text-accent font-bold">❯</span> <span class="text-white">${cmd.replace(/</g, '&lt;')}</span></div>`);
+
+        if (cmd === 'clear') {
+          bootTerminal();
+          return;
+        }
+
+        if (cmd === 'help') {
+          appendLine('<span class="text-slate-400">Available commands:</span>');
+          appendLine('  <span class="text-accent">rag</span>       — Run semantic vector search + root-cause fix across embedded repos');
+          appendLine('  <span class="text-accent">debug</span>     — Automated Python Polyspace / stack-trace triage simulation');
+          appendLine('  <span class="text-accent">uds</span>       — Simulated ISO 14229 0x27 Seed-and-Key bootloader handshake');
+          appendLine('  <span class="text-accent">projects</span>  — List flagship AI, automation &amp; bootloader systems');
+          appendLine('  <span class="text-accent">skills</span>    — Inspect technical stack summary');
+          appendLine('  <span class="text-accent">whoami</span>    — Engineer profile &amp; current role');
+          appendLine('  <span class="text-accent">clear</span>     — Reset terminal');
+          return;
+        }
+
+        if (cmd === 'whoami') {
+          appendLine('<span class="text-white font-semibold">Sagar Mishra</span> — Python AI &amp; Automation Engineer · Automotive Bootloader Developer');
+          appendLine('<span class="text-slate-400">Role:</span> Engineer 1 @ ZF Group (CDAIW6 Team, Hyderabad, IN)');
+          appendLine('<span class="text-slate-400">Focus:</span> 70% Python AI, RAG &amp; Debugging Automation | 30% ISO 14229 UDS Bootloaders');
+          return;
+        }
+
+        if (cmd === 'projects') {
+          appendLine('<span class="text-accent">[AI-01]</span>   AI Cortex &amp; Codebase RAG Engine <span class="text-slate-500">(Python, sentence-transformers, Streamlit)</span>');
+          appendLine('<span class="text-accent">[AI-02]</span>   CodeInsight Studio <span class="text-emerald-400">(€31K+ verified savings · Polyspace/VectorCAST)</span>');
+          appendLine('<span class="text-accent">[SYS-03]</span>  Atlas System Platform <span class="text-slate-500">(Azure DevOps War Room + AI Cortex + Flasher)</span>');
+          appendLine('<span class="text-accent">[AUTO-04]</span> Python CANoe Test &amp; CAPL Generator <span class="text-slate-500">(Automated UDS Verification)</span>');
+          appendLine('<span class="text-sky-400">[EMB-05]</span>  Automotive Bootloader &amp; UDS Stack <span class="text-slate-500">(Mahindra OEM · 0x27 Security)</span>');
+          return;
+        }
+
+        if (cmd === 'skills') {
+          appendLine('<span class="text-accent">Python &amp; AI:</span>     Python, RAG Pipelines, sentence-transformers, Streamlit, Local LLMs, aiohttp');
+          appendLine('<span class="text-emerald-400">Debug &amp; V&amp;V:</span>     Polyspace, VectorCAST, Static Analysis Parsing, Azure DevOps, Auto Test Gen');
+          appendLine('<span class="text-sky-400">Bootloader/ECU:</span>  Embedded C/C++, ISO 14229 (UDS), CAN/CAPL, Vector CANoe, MISRA-C');
+          return;
+        }
+
+        if (cmd === 'rag') {
+          appendLine('<span class="text-slate-400">[CORTEX] Query:</span> <span class="text-white">"Watchdog reset during flash sector erase + Polyspace orange check"</span>');
+          scheduleLine(240, '<span class="text-slate-500">[EMBED]  Encoding query via all-MiniLM-L6-v2 (384-dim) in 11.4 ms...</span>');
+          scheduleLine(520, '<span class="text-accent">[TOP-1]</span>  <span class="text-emerald-400">cos=0.942</span>  <span class="text-slate-200">bootloader/fls_drv.c:218</span> — Fls_EraseSector() missing Wdg_Trigger()');
+          scheduleLine(760, '<span class="text-accent">[TOP-2]</span>  <span class="text-emerald-400">cos=0.891</span>  <span class="text-slate-200">polyspace/red_orange.csv:84</span> — Unbounded wait loop on FLASH_SR_BSY');
+          scheduleLine(980, '<span class="text-accent">[TOP-3]</span>  <span class="text-sky-400">cos=0.847</span>  <span class="text-slate-200">docs/uds_0x31_routine.md:42</span> — NRC 0x78 RCRRP timing budget');
+          scheduleLine(1320, '<span class="text-emerald-400 font-semibold">[AI FIX]</span> Inject bounded timeout guard + periodic <span class="text-white">Wdg_Service()</span> &amp; <span class="text-white">NRC 0x78</span> heartbeat inside erase poll loop. Resolves Polyspace warning &amp; prevents WDG timeout.');
+          return;
+        }
+
+        if (cmd === 'debug') {
+          appendLine('<span class="text-slate-400">[CODEINSIGHT]</span> Starting Python static-analysis &amp; stack-trace triage...');
+          scheduleLine(260, '<span class="text-slate-500">  ▸ Parsing Polyspace XML (4,812 checks) + VectorCAST MC/DC coverage...</span>');
+          scheduleLine(560, '  <span class="text-rose-400">[FAIL]</span> 1 Red check detected: <span class="text-white">uds_sec_access.c:149</span> (uint8 overflow in key shift)');
+          scheduleLine(860, '  <span class="text-amber-300">[WARN]</span> 3 Orange checks auto-classified via historical triage rules');
+          scheduleLine(1160, '  <span class="text-emerald-400">[PASS]</span> VectorCAST Branch Coverage: <span class="text-white">98.4%</span> (+2.1% vs baseline)');
+          scheduleLine(1440, '<span class="text-emerald-400 font-semibold">[DONE]</span> Executive PDF generated → <span class="text-accent">CodeInsight_Build_2026_11.pdf</span> (triage time: 1.4s)');
+          return;
+        }
+
+        if (cmd === 'uds') {
+          appendLine('<span class="text-sky-400">[CAN-0]</span> Initiating ISO 14229 Bootloader Security Access (0x27) on ID 0x7E0...');
+          scheduleLine(240, '  <span class="text-slate-400">TX 0x7E0:</span> <span class="text-white">02 10 02 00 00 00 00 00</span>  <span class="text-slate-500">// Programming Session</span>');
+          scheduleLine(480, '  <span class="text-emerald-400">RX 0x7E8:</span> <span class="text-white">06 50 02 00 32 01 F4 00</span>  <span class="text-slate-500">// Positive Response</span>');
+          scheduleLine(740, '  <span class="text-slate-400">TX 0x7E0:</span> <span class="text-white">02 27 01 00 00 00 00 00</span>  <span class="text-slate-500">// Request Seed (Level 1)</span>');
+          scheduleLine(980, '  <span class="text-emerald-400">RX 0x7E8:</span> <span class="text-white">06 67 01 A4 7F 2C 91 00</span>  <span class="text-slate-500">// Seed = 0xA47F2C91</span>');
+          scheduleLine(1260, '  <span class="text-accent">[PY-KEY]</span>  Computed OEM Key = <span class="text-white">0x5B80D36E</span>');
+          scheduleLine(1500, '  <span class="text-slate-400">TX 0x7E0:</span> <span class="text-white">06 27 02 5B 80 D3 6E 00</span>  <span class="text-slate-500">// Send Key</span>');
+          scheduleLine(1760, '  <span class="text-emerald-400 font-semibold">RX 0x7E8:</span> <span class="text-white">02 67 02 00 00 00 00 00</span>  <span class="text-emerald-400">// ECU UNLOCKED ✓</span>');
+          return;
+        }
+
+        appendLine(`<span class="text-rose-400">Command not found:</span> ${cmd.replace(/</g, '&lt;')}. Type <span class="text-slate-200">help</span> to see available commands.`);
+      }
+
+      bootTerminal();
+
+      termForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        runCommand(termInput.value);
+        termInput.value = '';
+      });
+
+      document.querySelectorAll('.cmd-pill').forEach((pill) => {
+        pill.addEventListener('click', () => {
+          switchWorkbenchTab('console');
+          runCommand(pill.getAttribute('data-cmd'));
+        });
+      });
+
+      document.getElementById('hero-run-rag-btn').addEventListener('click', () => {
+        switchWorkbenchTab('console');
+        runCommand('rag');
+      });
+
+      /* -----------------------------------------------------------------------
+         7. WORKBENCH TABS & DUAL-MODE HTML5 <CANVAS> VISUALIZER
+      ----------------------------------------------------------------------- */
+      const tabBtnConsole = document.getElementById('tab-btn-console');
+      const tabBtnViz = document.getElementById('tab-btn-visualizer');
+      const panelConsole = document.getElementById('workbench-panel-console');
+      const panelViz = document.getElementById('workbench-panel-visualizer');
+
+      const vizModeRagBtn = document.getElementById('viz-mode-rag');
+      const vizModeCanBtn = document.getElementById('viz-mode-can');
+      const vizPauseBtn = document.getElementById('viz-pause-btn');
+      const vizMetricBadge = document.getElementById('viz-metric-badge');
+      const vizFeedTitle = document.getElementById('viz-feed-title');
+      const vizLogFeed = document.getElementById('viz-log-feed');
+      const canvasWrap = document.getElementById('viz-canvas-wrap');
+      const canvas = document.getElementById('telemetry-canvas');
+      const ctx = canvas.getContext('2d');
+
+      let activeTab = 'console';
+      let vizMode = 'rag'; // 'rag' | 'can'
+      let vizPaused = false;
+      let animTime = 0;
+      let lastFeedTick = 0;
+      let feedItems = [];
+
+      function getAccentHex() {
+        return getComputedStyle(document.documentElement).getPropertyValue('--accent-bright').trim() || '#a78bfa';
+      }
+
+      function resizeCanvas() {
+        if (!canvasWrap || panelViz.classList.contains('hidden')) return;
+        const rect = canvasWrap.getBoundingClientRect();
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.max(300, Math.floor(rect.width * dpr));
+        canvas.height = Math.max(180, Math.floor(rect.height * dpr));
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      function switchWorkbenchTab(tab) {
+        activeTab = tab;
+        const isConsole = tab === 'console';
+        panelConsole.classList.toggle('hidden', !isConsole);
+        panelConsole.classList.toggle('flex', isConsole);
+        panelViz.classList.toggle('hidden', isConsole);
+        panelViz.classList.toggle('flex', !isConsole);
+
+        tabBtnConsole.classList.toggle('bg-accent-soft', isConsole);
+        tabBtnConsole.classList.toggle('text-accent', isConsole);
+        tabBtnConsole.classList.toggle('border-accent-soft', isConsole);
+        tabBtnConsole.classList.toggle('text-slate-400', !isConsole);
+        tabBtnConsole.classList.toggle('border-transparent', !isConsole);
+
+        tabBtnViz.classList.toggle('bg-accent-soft', !isConsole);
+        tabBtnViz.classList.toggle('text-accent', !isConsole);
+        tabBtnViz.classList.toggle('border-accent-soft', !isConsole);
+        tabBtnViz.classList.toggle('text-slate-400', isConsole);
+        tabBtnViz.classList.toggle('border-transparent', isConsole);
+
+        if (!isConsole) {
+          requestAnimationFrame(resizeCanvas);
+        }
+      }
+
+      tabBtnConsole.addEventListener('click', () => switchWorkbenchTab('console'));
+      tabBtnViz.addEventListener('click', () => switchWorkbenchTab('visualizer'));
+
+      function setVizMode(mode) {
+        vizMode = mode;
+        feedItems = [];
+        vizLogFeed.innerHTML = '';
+        const isRag = mode === 'rag';
+
+        vizModeRagBtn.classList.toggle('bg-accent-soft', isRag);
+        vizModeRagBtn.classList.toggle('text-accent', isRag);
+        vizModeRagBtn.classList.toggle('font-semibold', isRag);
+        vizModeRagBtn.classList.toggle('text-slate-400', !isRag);
+
+        vizModeCanBtn.classList.toggle('bg-accent-soft', !isRag);
+        vizModeCanBtn.classList.toggle('text-accent', !isRag);
+        vizModeCanBtn.classList.toggle('font-semibold', !isRag);
+        vizModeCanBtn.classList.toggle('text-slate-400', isRag);
+
+        vizFeedTitle.textContent = isRag
+          ? 'LIVE VECTOR STREAM // sentence-transformers/all-MiniLM-L6-v2'
+          : 'LIVE CAN-BUS 500kbps // ISO 14229 UDS DIAGNOSTIC FRAMES';
+      }
+
+      vizModeRagBtn.addEventListener('click', () => setVizMode('rag'));
+      vizModeCanBtn.addEventListener('click', () => setVizMode('can'));
+
+      vizPauseBtn.addEventListener('click', () => {
+        vizPaused = !vizPaused;
+        vizPauseBtn.textContent = vizPaused ? 'Resume' : 'Pause';
+      });
+
+      const ragSampleLogs = [
+        () => `<span class="text-accent">[VEC]</span> query_hash=0x9f2a · top_k=3 · <span class="text-emerald-400">cos=0.942</span> · 12.8ms`,
+        () => `<span class="text-accent">[RAG]</span> chunk=fls_drv.c:218 · tokens=312 · <span class="text-sky-400">rerank=0.91</span>`,
+        () => `<span class="text-accent">[DBG]</span> polyspace_rule=MISRA_10.4 · auto_triage=<span class="text-emerald-400">MATCHED</span>`,
+        () => `<span class="text-accent">[IDX]</span> repo=cdaiw6_bootloader · vectors=14,280 · <span class="text-slate-400">FAISS_L2</span>`
+      ];
+
+      const canSampleLogs = [
+        () => `<span class="text-sky-400">0x7E0</span> [8] <span class="text-white">02 27 01 00 00 00 00 00</span> <span class="text-slate-500">REQ_SEED</span>`,
+        () => `<span class="text-emerald-400">0x7E8</span> [8] <span class="text-white">06 67 01 A4 7F 2C 91 00</span> <span class="text-slate-500">POS_SEED</span>`,
+        () => `<span class="text-sky-400">0x7E0</span> [8] <span class="text-white">04 31 01 FF 00 00 00 00</span> <span class="text-slate-500">ERASE_MEM</span>`,
+        () => `<span class="text-emerald-400">0x7E8</span> [8] <span class="text-white">03 7F 31 78 00 00 00 00</span> <span class="text-amber-300">RCRRP_78</span>`
+      ];
+
+      function pushVizLog() {
+        const pool = vizMode === 'rag' ? ragSampleLogs : canSampleLogs;
+        const line = pool[Math.floor(Math.random() * pool.length)]();
+        const ts = new Date().toTimeString().slice(0, 8);
+        feedItems.unshift(`<div class="truncate"><span class="text-slate-600">${ts}</span> ${line}</div>`);
+        if (feedItems.length > 4) feedItems.pop();
+        vizLogFeed.innerHTML = feedItems.join('');
+
+        if (vizMode === 'rag') {
+          const ms = (11.2 + Math.random() * 4.8).toFixed(1);
+          const cos = (0.89 + Math.random() * 0.07).toFixed(2);
+          vizMetricBadge.textContent = `${ms} ms · cos ${cos}`;
+        } else {
+          const load = (34 + Math.random() * 14).toFixed(1);
+          vizMetricBadge.textContent = `500 kbps · Bus ${load}%`;
+        }
+      }
+
+      // Draw Mode A: RAG & Embedding Pipeline Node Graph
+      function drawRagPipeline(w, h, t) {
+        const accent = getAccentHex();
+        ctx.clearRect(0, 0, w, h);
+
+        // Subtle grid
+        ctx.strokeStyle = 'rgba(148, 163, 184, 0.06)';
+        ctx.lineWidth = 1;
+        for (let x = 0; x < w; x += 28) {
+          ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+        }
+        for (let y = 0; y < h; y += 28) {
+          ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+        }
+
+        const stages = [
+          { x: w * 0.13, y: h * 0.50, label: 'QUERY', sub: 'Code / Log' },
+          { x: w * 0.37, y: h * 0.28, label: 'EMBED', sub: '384-dim' },
+          { x: w * 0.37, y: h * 0.72, label: 'AST PARSE', sub: 'C / Python' },
+          { x: w * 0.64, y: h * 0.50, label: 'VECTOR DB', sub: 'Top-K Cos' },
+          { x: w * 0.87, y: h * 0.50, label: 'AI DEBUG', sub: 'Root Fix' }
+        ];
+
+        const edges = [
+          [0, 1], [0, 2], [1, 3], [2, 3], [3, 4]
+        ];
+
+        // Draw edges & animated token packets
+        edges.forEach(([aIdx, bIdx], i) => {
+          const a = stages[aIdx];
+          const b = stages[bIdx];
+
+          ctx.strokeStyle = 'rgba(148, 163, 184, 0.22)';
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
+
+          // Traveling glowing token dot
+          const progress = ((t * 0.45 + i * 0.23) % 1);
+          const px = a.x + (b.x - a.x) * progress;
+          const py = a.y + (b.y - a.y) * progress;
+
+          ctx.beginPath();
+          ctx.arc(px, py, 3.5, 0, Math.PI * 2);
+          ctx.fillStyle = accent;
+          ctx.shadowColor = accent;
+          ctx.shadowBlur = 12;
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        });
+
+        // Draw nodes
+        stages.forEach((s, idx) => {
+          const pulse = 1 + Math.sin(t * 2.5 + idx) * 0.08;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, 17 * pulse, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(13, 17, 26, 0.92)';
+          ctx.fill();
+          ctx.lineWidth = 1.6;
+          ctx.strokeStyle = idx === 4 ? '#34d399' : accent;
+          ctx.stroke();
+
+          ctx.fillStyle = '#e2e8f0';
+          ctx.font = '600 9px "JetBrains Mono", monospace';
+          ctx.textAlign = 'center';
+          ctx.fillText(s.label, s.x, s.y + 3);
+
+          ctx.fillStyle = '#64748b';
+          ctx.font = '400 9px "JetBrains Mono", monospace';
+          ctx.fillText(s.sub, s.x, s.y + 30);
+        });
+      }
+
+      // Draw Mode B: Dual-Channel CAN-H / CAN-L Oscilloscope
+      function drawCanOscilloscope(w, h, t) {
+        ctx.clearRect(0, 0, w, h);
+
+        // Oscilloscope graticule
+        ctx.strokeStyle = 'rgba(148, 163, 184, 0.08)';
+        ctx.lineWidth = 1;
+        for (let x = 0; x < w; x += 32) {
+          ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+        }
+        for (let y = 0; y < h; y += 26) {
+          ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+        }
+
+        const midY = h * 0.5;
+        const amp = Math.min(36, h * 0.22);
+        const bitWidth = 14;
+        const pattern = [0,1,1,0,1,0,0,1,1,1,0,1,0,1,1,0,0,1,0,1,1,0,1,0,1,1,1,0,0,1,0,1];
+        const offset = Math.floor(t * 48);
+
+        // CAN-H (Cyan)
+        ctx.beginPath();
+        ctx.strokeStyle = '#38bdf8';
+        ctx.lineWidth = 2;
+        for (let x = 0; x < w; x += 2) {
+          const bit = pattern[Math.floor((x + offset) / bitWidth) % pattern.length];
+          const y = midY - (bit ? amp : 4);
+          if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+
+        // CAN-L (Emerald mirror)
+        ctx.beginPath();
+        ctx.strokeStyle = '#34d399';
+        ctx.lineWidth = 2;
+        for (let x = 0; x < w; x += 2) {
+          const bit = pattern[Math.floor((x + offset) / bitWidth) % pattern.length];
+          const y = midY + (bit ? amp : 4);
+          if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+
+        // Channel Labels
+        ctx.font = '600 10px "JetBrains Mono", monospace';
+        ctx.fillStyle = '#38bdf8';
+        ctx.fillText('CH1: CAN-H (3.5V)', 12, 18);
+        ctx.fillStyle = '#34d399';
+        ctx.fillText('CH2: CAN-L (1.5V)', 12, h - 10);
+      }
+
+      function animationLoop(now) {
+        if (activeTab === 'visualizer' && !vizPaused) {
+          animTime += 0.025;
+          const rect = canvasWrap.getBoundingClientRect();
+          if (vizMode === 'rag') {
+            drawRagPipeline(rect.width, rect.height, animTime);
+          } else {
+            drawCanOscilloscope(rect.width, rect.height, animTime);
+          }
+          if (now - lastFeedTick > 950) {
+            pushVizLog();
+            lastFeedTick = now;
+          }
+        }
+        requestAnimationFrame(animationLoop);
+      }
+
+      window.addEventListener('resize', resizeCanvas);
+      window.addEventListener('load', () => {
+        resizeCanvas();
+        requestAnimationFrame(animationLoop);
+      });
+
+      /* -----------------------------------------------------------------------
+         8. FEATURED SYSTEMS DATA + UNIQUE INLINE SVG ARCHITECTURES + DRAWER
+      ----------------------------------------------------------------------- */
+      const systemsData = [
+        {
+          id: 'ai-cortex',
+          code: 'AI-01',
+          category: 'python-ai',
+          categoryLabel: 'Python & AI',
+          title: 'AI Cortex & Codebase RAG Engine',
+          shortDesc: 'Semantic search and AI debugging assistant built with Python, sentence-transformers, and Streamlit to index complex multi-repo codebases and accelerate root-cause analysis.',
+          impact: 'Slashed cross-repository specification & bug lookup times from 30+ minutes of manual grep to instant ranked semantic matches with contextual debugging hints.',
+          problem: 'Automotive embedded codebases span thousands of C headers, diagnostic specs, and historical bug logs. Traditional keyword search misses conceptual links between symptoms, Polyspace rules, and firmware routines.',
+          highlights: [
+            'Built an end-to-end Python RAG ingestion pipeline chunking C/Python source files and engineering docs into dense vector embeddings via sentence-transformers.',
+            'Implemented cosine-similarity retrieval with metadata filtering (module, file type, diagnostic service) for high-precision root-cause triage.',
+            'Wrapped in a fast Streamlit workbench UI so engineers can query stack traces, error codes, and architecture docs locally.'
+          ],
+          stack: ['Python', 'RAG Pipelines', 'sentence-transformers', 'Streamlit', 'Local LLMs'],
+          github: 'https://github.com/yourusername/ai-cortex-rag',
+          svg: `
+            <svg viewBox="0 0 520 130" class="w-full h-auto font-mono" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="arr1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1 L 10 5 L 0 9 z" fill="#a78bfa"/>
+                </marker>
+              </defs>
+              <rect x="10" y="34" width="102" height="58" rx="10" fill="#111827" stroke="#8b5cf6" stroke-width="1.5"/>
+              <text x="61" y="59" fill="#f8fafc" font-size="10" font-weight="700" text-anchor="middle">Multi-Repo</text>
+              <text x="61" y="75" fill="#94a3b8" font-size="9" text-anchor="middle">C / Py / Docs</text>
+
+              <line x1="112" y1="63" x2="144" y2="63" stroke="#a78bfa" stroke-width="1.5" marker-end="url(#arr1)"/>
+
+              <rect x="148" y="34" width="106" height="58" rx="10" fill="#111827" stroke="#38bdf8" stroke-width="1.5"/>
+              <text x="201" y="59" fill="#f8fafc" font-size="10" font-weight="700" text-anchor="middle">Embeddings</text>
+              <text x="201" y="75" fill="#94a3b8" font-size="9" text-anchor="middle">MiniLM Vectors</text>
+
+              <line x1="254" y1="63" x2="286" y2="63" stroke="#a78bfa" stroke-width="1.5" marker-end="url(#arr1)"/>
+
+              <rect x="290" y="34" width="96" height="58" rx="10" fill="#111827" stroke="#8b5cf6" stroke-width="1.5"/>
+              <text x="338" y="59" fill="#f8fafc" font-size="10" font-weight="700" text-anchor="middle">Retriever</text>
+              <text x="338" y="75" fill="#94a3b8" font-size="9" text-anchor="middle">Top-K Cosine</text>
+
+              <line x1="386" y1="63" x2="418" y2="63" stroke="#a78bfa" stroke-width="1.5" marker-end="url(#arr1)"/>
+
+              <rect x="422" y="34" width="88" height="58" rx="10" fill="#064e3b" fill-opacity="0.4" stroke="#34d399" stroke-width="1.5"/>
+              <text x="466" y="59" fill="#ecfdf5" font-size="10" font-weight="700" text-anchor="middle">AI Debug</text>
+              <text x="466" y="75" fill="#6ee7b7" font-size="9" text-anchor="middle">Root Fix</text>
+            </svg>`
+        },
+        {
+          id: 'codeinsight',
+          code: 'AI-02',
+          category: 'debug-auto',
+          categoryLabel: 'Debug & Automation',
+          title: 'CodeInsight Studio',
+          shortDesc: 'Automated Python verification & validation engine parsing Polyspace static analysis and VectorCAST unit-test artifacts into executive summary PDFs, delivering €31K+ in verified savings.',
+          impact: '€31K+ in verified engineering cost savings by eliminating manual V&V report collation and accelerating static-analysis defect triage.',
+          problem: 'Reviewing Polyspace Bug Finder / Code Prover checks alongside VectorCAST coverage reports across release builds required tedious manual spreadsheet merging and delayed quality sign-offs.',
+          highlights: [
+            'Engineered robust Python parsers to ingest Polyspace XML/CSV artifacts and VectorCAST HTML/coverage reports automatically.',
+            'Built automated delta tracking to highlight newly introduced Red/Orange checks, MISRA-C deviations, and coverage regressions.',
+            'Generates formatted, executive-ready PDF quality summaries in seconds for management and OEM audit reviews.'
+          ],
+          stack: ['Python', 'Polyspace', 'VectorCAST', 'Static Analysis Parsing', 'PDF Engine'],
+          github: 'https://github.com/yourusername/codeinsight-studio',
+          svg: `
+            <svg viewBox="0 0 520 135" class="w-full h-auto font-mono" xmlns="http://www.w3.org/2000/svg">
+              <rect x="12" y="14" width="118" height="44" rx="9" fill="#111827" stroke="#f59e0b" stroke-width="1.5"/>
+              <text x="71" y="40" fill="#fef3c7" font-size="10" font-weight="700" text-anchor="middle">Polyspace Logs</text>
+
+              <rect x="12" y="76" width="118" height="44" rx="9" fill="#111827" stroke="#38bdf8" stroke-width="1.5"/>
+              <text x="71" y="102" fill="#e0f2fe" font-size="10" font-weight="700" text-anchor="middle">VectorCAST</text>
+
+              <path d="M130 36 L175 66 M130 98 L175 66" stroke="#94a3b8" stroke-width="1.5" fill="none"/>
+
+              <rect x="178" y="34" width="144" height="64" rx="10" fill="#111827" stroke="#8b5cf6" stroke-width="1.5"/>
+              <text x="250" y="61" fill="#f8fafc" font-size="10" font-weight="700" text-anchor="middle">Python V&amp;V Engine</text>
+              <text x="250" y="79" fill="#a78bfa" font-size="9" text-anchor="middle">Parse · Diff · Triage</text>
+
+              <line x1="322" y1="66" x2="364" y2="66" stroke="#34d399" stroke-width="1.8"/>
+
+              <rect x="366" y="34" width="140" height="64" rx="10" fill="#064e3b" fill-opacity="0.4" stroke="#34d399" stroke-width="1.5"/>
+              <text x="436" y="61" fill="#ecfdf5" font-size="10" font-weight="700" text-anchor="middle">Executive PDF</text>
+              <text x="436" y="79" fill="#6ee7b7" font-size="9" text-anchor="middle">€31K+ Saved</text>
+            </svg>`
+        },
+        {
+          id: 'atlas-system',
+          code: 'SYS-03',
+          category: 'python-ai',
+          categoryLabel: 'Python & AI',
+          title: 'Atlas System Platform',
+          shortDesc: 'Full-stack Python/Streamlit engineering workspace for CDAIW6 integrating an Azure DevOps War Room tracker, AI Cortex search, and automated vehicle flashing.',
+          impact: 'Unified daily standup tracking, semantic knowledge discovery, and bench/vehicle ECU flashing into one zero-friction Python platform.',
+          problem: 'Engineers constantly context-switched between Azure DevOps boards, scattered documentation folders, and standalone flashing scripts during high-pressure delivery sprints.',
+          highlights: [
+            'Built a real-time War Room standup tracker synced directly with Azure DevOps APIs for live blocker and sprint visibility.',
+            'Embedded AI Cortex semantic search directly inside the workspace for instant spec and error-code lookup.',
+            'Integrated an automated vehicle flashing module with structured logging to reduce manual bench setup errors.'
+          ],
+          stack: ['Python', 'Streamlit', 'Azure DevOps', 'AI Cortex', 'aiohttp'],
+          github: 'https://github.com/yourusername/atlas-system',
+          svg: `
+            <svg viewBox="0 0 520 135" class="w-full h-auto font-mono" xmlns="http://www.w3.org/2000/svg">
+              <rect x="155" y="14" width="210" height="36" rx="9" fill="#1e1b4b" stroke="#a78bfa" stroke-width="1.5"/>
+              <text x="260" y="36" fill="#ffffff" font-size="11" font-weight="700" text-anchor="middle">Atlas Streamlit Hub</text>
+
+              <path d="M260 50 L260 76 M210 50 L92 76 M310 50 L428 76" stroke="#8b5cf6" stroke-width="1.5" fill="none"/>
+
+              <rect x="16" y="78" width="150" height="44" rx="9" fill="#111827" stroke="#38bdf8" stroke-width="1.5"/>
+              <text x="91" y="104" fill="#e0f2fe" font-size="10" font-weight="600" text-anchor="middle">ADO War Room</text>
+
+              <rect x="185" y="78" width="150" height="44" rx="9" fill="#111827" stroke="#a78bfa" stroke-width="1.5"/>
+              <text x="260" y="104" fill="#ede9fe" font-size="10" font-weight="600" text-anchor="middle">AI Cortex RAG</text>
+
+              <rect x="354" y="78" width="150" height="44" rx="9" fill="#111827" stroke="#34d399" stroke-width="1.5"/>
+              <text x="429" y="104" fill="#d1fae5" font-size="10" font-weight="600" text-anchor="middle">Auto Flasher</text>
+            </svg>`
+        },
+        {
+          id: 'canoe-gen',
+          code: 'AUTO-04',
+          category: 'debug-auto',
+          categoryLabel: 'Debug & Automation',
+          title: 'Python CANoe Test & CAPL Generator',
+          shortDesc: 'Generalized Python tool that auto-generates Vector CANoe confidence test panels and CAPL scripts for diagnostic service verification.',
+          impact: 'Eliminated hours of repetitive boilerplate CAPL authoring per ECU variant while standardizing UDS confidence & regression coverage.',
+          problem: 'Manually writing CAPL test scripts and Vector CANoe UI panels for every diagnostic service and negative response code (NRC) was error-prone and slow across OEM programs.',
+          highlights: [
+            'Parses structured diagnostic specifications in Python to synthesize clean, ready-to-compile CAPL test suites.',
+            'Auto-generates interactive Vector CANoe test panels for rapid engineer confidence validation on hardware benches.',
+            'Enforces consistent positive and negative response assertions across ISO 14229 UDS services.'
+          ],
+          stack: ['Python', 'CAPL', 'Vector CANoe', 'Automated Test Gen', 'UDS'],
+          github: 'https://github.com/yourusername/canoe-capl-generator',
+          svg: `
+            <svg viewBox="0 0 520 130" class="w-full h-auto font-mono" xmlns="http://www.w3.org/2000/svg">
+              <rect x="14" y="36" width="118" height="56" rx="9" fill="#111827" stroke="#38bdf8" stroke-width="1.5"/>
+              <text x="73" y="61" fill="#f8fafc" font-size="10" font-weight="700" text-anchor="middle">UDS Spec</text>
+              <text x="73" y="77" fill="#94a3b8" font-size="9" text-anchor="middle">JSON / Matrix</text>
+
+              <line x1="132" y1="64" x2="176" y2="64" stroke="#a78bfa" stroke-width="1.5"/>
+
+              <rect x="178" y="36" width="136" height="56" rx="9" fill="#111827" stroke="#8b5cf6" stroke-width="1.5"/>
+              <text x="246" y="61" fill="#f8fafc" font-size="10" font-weight="700" text-anchor="middle">Python Engine</text>
+              <text x="246" y="77" fill="#a78bfa" font-size="9" text-anchor="middle">Template Synth</text>
+
+              <path d="M314 64 L360 36 M314 64 L360 92" stroke="#34d399" stroke-width="1.5" fill="none"/>
+
+              <rect x="362" y="16" width="144" height="40" rx="8" fill="#111827" stroke="#34d399" stroke-width="1.5"/>
+              <text x="434" y="40" fill="#d1fae5" font-size="10" font-weight="600" text-anchor="middle">CAPL Test Suite</text>
+
+              <rect x="362" y="72" width="144" height="40" rx="8" fill="#111827" stroke="#34d399" stroke-width="1.5"/>
+              <text x="434" y="96" fill="#d1fae5" font-size="10" font-weight="600" text-anchor="middle">CANoe UI Panels</text>
+            </svg>`
+        },
+        {
+          id: 'bootloader-uds',
+          code: 'EMB-05',
+          category: 'bootloader',
+          categoryLabel: 'Bootloader & Embedded',
+          title: 'Automotive Bootloader & UDS Stack',
+          shortDesc: 'Solely developed Mahindra OEM bootloader implementing ISO 14229 UDS services, custom 0x27 security access algorithms, and MISRA-C compliance.',
+          impact: '100% end-to-end ownership of production Mahindra OEM ECU bootloader delivery with strict MISRA-C static compliance.',
+          problem: 'Production automotive ECUs require deterministic, fail-safe over-the-CAN firmware flashing with cryptographic access control and strict ISO 14229 compliance.',
+          highlights: [
+            'Architected and implemented the complete bootloader state machine in Embedded C covering Programming Session (0x10), Erase/Checksum routines (0x31), and Transfer Data (0x34/0x36/0x37).',
+            'Implemented custom OEM 0x27 Seed-and-Key Security Access logic with lockout counters and timing guards.',
+            'Verified against MISRA-C guidelines using Polyspace and validated on bench hardware via Vector CANoe.'
+          ],
+          stack: ['Embedded C', 'ISO 14229 (UDS)', 'Security Access 0x27', 'CAN', 'MISRA-C'],
+          github: 'https://github.com/yourusername/automotive-bootloader-uds',
+          svg: `
+            <svg viewBox="0 0 520 130" class="w-full h-auto font-mono" xmlns="http://www.w3.org/2000/svg">
+              <rect x="10" y="38" width="90" height="52" rx="9" fill="#111827" stroke="#38bdf8" stroke-width="1.5"/>
+              <text x="55" y="61" fill="#e0f2fe" font-size="10" font-weight="700" text-anchor="middle">0x10 02</text>
+              <text x="55" y="76" fill="#94a3b8" font-size="8.5" text-anchor="middle">Prog Sess</text>
+
+              <line x1="100" y1="64" x2="128" y2="64" stroke="#38bdf8" stroke-width="1.5"/>
+
+              <rect x="130" y="38" width="102" height="52" rx="9" fill="#111827" stroke="#a78bfa" stroke-width="1.5"/>
+              <text x="181" y="61" fill="#ede9fe" font-size="10" font-weight="700" text-anchor="middle">0x27 Auth</text>
+              <text x="181" y="76" fill="#94a3b8" font-size="8.5" text-anchor="middle">Seed / Key</text>
+
+              <line x1="232" y1="64" x2="260" y2="64" stroke="#38bdf8" stroke-width="1.5"/>
+
+              <rect x="262" y="38" width="114" height="52" rx="9" fill="#111827" stroke="#38bdf8" stroke-width="1.5"/>
+              <text x="319" y="61" fill="#e0f2fe" font-size="10" font-weight="700" text-anchor="middle">0x34 / 0x36</text>
+              <text x="319" y="76" fill="#94a3b8" font-size="8.5" text-anchor="middle">Flash Write</text>
+
+              <line x1="376" y1="64" x2="404" y2="64" stroke="#34d399" stroke-width="1.5"/>
+
+              <rect x="406" y="38" width="104" height="52" rx="9" fill="#064e3b" fill-opacity="0.4" stroke="#34d399" stroke-width="1.5"/>
+              <text x="458" y="61" fill="#ecfdf5" font-size="10" font-weight="700" text-anchor="middle">0x31 / 0x11</text>
+              <text x="458" y="76" fill="#6ee7b7" font-size="8.5" text-anchor="middle">Verify &amp; Boot</text>
+            </svg>`
+        }
+      ];
+
+      const projectsGrid = document.getElementById('projects-grid');
+
+      function renderProjects(filter = 'all') {
+        projectsGrid.innerHTML = '';
+        const list = filter === 'all' ? systemsData : systemsData.filter((p) => p.category === filter);
+
+        list.forEach((proj, idx) => {
+          const isPrimary = proj.category !== 'bootloader';
+          const badgeClasses = isPrimary
+            ? 'bg-accent-soft text-accent border-accent-soft'
+            : 'bg-sky-500/10 text-sky-300 border-sky-500/30';
+
+          const card = document.createElement('article');
+          // Make the first two flagship AI/Python systems span cleanly on large screens when viewing all
+          const spanClass = filter === 'all' && idx < 2 ? 'lg:col-span-1' : '';
+          card.className = `spotlight-card rounded-2xl p-6 flex flex-col justify-between cursor-pointer group hover:-translate-y-1 transition-all duration-300 ${spanClass}`;
+          card.setAttribute('tabindex', '0');
+          card.setAttribute('role', 'button');
+          card.setAttribute('aria-label', `Inspect ${proj.title} architecture dossier`);
+
+          card.innerHTML = `
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-4">
+                <span class="font-mono text-[11px] font-bold px-2.5 py-1 rounded-md border ${badgeClasses}">[${proj.code}] ${proj.categoryLabel}</span>
+                <span class="font-mono text-[11px] text-slate-500 group-hover:text-accent transition-colors">Dossier ↗</span>
+              </div>
+              <h3 class="text-lg font-bold text-white group-hover:text-accent transition-colors">${proj.title}</h3>
+              <p class="text-sm text-slate-400 leading-relaxed mt-2.5">${proj.shortDesc}</p>
+            </div>
+            <div class="mt-5 pt-4 border-t border-slate-800/80">
+              <div class="flex flex-wrap gap-1.5">
+                ${proj.stack.slice(0, 4).map((t) => `<span class="px-2 py-0.5 rounded-md font-mono text-[11px] bg-slate-900 text-slate-300 border border-slate-800">${t}</span>`).join('')}
+              </div>
+            </div>
+          `;
+
+          card.addEventListener('click', () => openDossier(proj.id));
+          card.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              openDossier(proj.id);
+            }
+          });
+
+          projectsGrid.appendChild(card);
+        });
+
+        attachSpotlightListeners();
+      }
+
+      renderProjects('all');
+
+      // Project Filter Tabs
+      document.querySelectorAll('.proj-filter-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.proj-filter-btn').forEach((b) => {
+            b.classList.remove('bg-accent-soft', 'text-accent', 'border-accent-soft', 'font-semibold');
+            b.classList.add('text-slate-400', 'border-transparent');
+          });
+          btn.classList.add('bg-accent-soft', 'text-accent', 'border-accent-soft', 'font-semibold');
+          btn.classList.remove('text-slate-400', 'border-transparent');
+          renderProjects(btn.getAttribute('data-proj-filter'));
+        });
+      });
+
+      // Slide-Over Engineering Dossier Drawer
+      const dossierModal = document.getElementById('dossier-modal');
+      const dossierBackdrop = document.getElementById('dossier-backdrop');
+      const dossierPanel = document.getElementById('dossier-panel');
+
+      function openDossier(id) {
+        const proj = systemsData.find((p) => p.id === id);
+        if (!proj) return;
+
+        document.getElementById('dossier-code').textContent = proj.code;
+        document.getElementById('dossier-category').textContent = proj.categoryLabel;
+        document.getElementById('dossier-title').textContent = proj.title;
+        document.getElementById('dossier-svg').innerHTML = proj.svg;
+        document.getElementById('dossier-impact').textContent = proj.impact;
+        document.getElementById('dossier-problem').textContent = proj.problem;
+        document.getElementById('dossier-highlights').innerHTML = proj.highlights
+          .map((h) => `<li class="flex items-start gap-2.5"><span class="text-accent mt-1">▸</span><span>${h}</span></li>`)
+          .join('');
+        document.getElementById('dossier-stack').innerHTML = proj.stack
+          .map((s) => `<span class="px-2.5 py-1 rounded-lg font-mono text-xs bg-slate-900 text-slate-200 border border-slate-800">${s}</span>`)
+          .join('');
+        document.getElementById('dossier-github').href = proj.github;
+
+        dossierModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        requestAnimationFrame(() => {
+          dossierBackdrop.classList.remove('opacity-0');
+          dossierPanel.classList.remove('translate-x-full');
+        });
+      }
+
+      function closeDossier() {
+        if (dossierModal.classList.contains('hidden')) return;
+        dossierBackdrop.classList.add('opacity-0');
+        dossierPanel.classList.add('translate-x-full');
+        setTimeout(() => {
+          dossierModal.classList.add('hidden');
+          document.body.style.overflow = '';
+        }, 300);
+      }
+
+      document.getElementById('dossier-close-btn').addEventListener('click', closeDossier);
+      document.getElementById('dossier-close-btn-2').addEventListener('click', closeDossier);
+      dossierBackdrop.addEventListener('click', closeDossier);
+
+      /* -----------------------------------------------------------------------
+         9. TECHNICAL STACK DOMAIN FILTER
+      ----------------------------------------------------------------------- */
+      document.querySelectorAll('.stack-filter-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const domain = btn.getAttribute('data-stack-filter');
+          document.querySelectorAll('.stack-filter-btn').forEach((b) => {
+            b.classList.remove('bg-accent-soft', 'text-accent', 'border-accent-soft', 'font-semibold');
+            b.classList.add('text-slate-400', 'border-transparent');
+          });
+          btn.classList.add('bg-accent-soft', 'text-accent', 'border-accent-soft', 'font-semibold');
+          btn.classList.remove('text-slate-400', 'border-transparent');
+
+          document.querySelectorAll('.stack-card').forEach((card) => {
+            const grp = card.getAttribute('data-stack-group');
+            const show = domain === 'all' || grp === domain;
+            card.classList.toggle('hidden', !show);
+          });
+        });
+      });
+
+      /* -----------------------------------------------------------------------
+         10. COMMAND PALETTE (Ctrl+K / Cmd+K)
+      ----------------------------------------------------------------------- */
+      const cmdkModal = document.getElementById('cmdk-modal');
+      const cmdkInput = document.getElementById('cmdk-input');
+      const cmdkList = document.getElementById('cmdk-list');
+      let cmdkIndex = 0;
+
+      const cmdkCommands = [
+        { label: 'Run AI Debug Trace (CodeInsight)', tag: 'CONSOLE', action: () => { scrollToTop(); switchWorkbenchTab('console'); runCommand('debug'); } },
+        { label: 'Run Codebase RAG Search (AI Cortex)', tag: 'CONSOLE', action: () => { scrollToTop(); switchWorkbenchTab('console'); runCommand('rag'); } },
+        { label: 'Run UDS 0x27 Security Handshake', tag: 'BOOTLOADER', action: () => { scrollToTop(); switchWorkbenchTab('console'); runCommand('uds'); } },
+        { label: 'Open Live RAG Embedding Visualizer', tag: 'CANVAS', action: () => { scrollToTop(); switchWorkbenchTab('visualizer'); setVizMode('rag'); } },
+        { label: 'Open Live CAN-Bus 500kbps Oscilloscope', tag: 'CANVAS', action: () => { scrollToTop(); switchWorkbenchTab('visualizer'); setVizMode('can'); } },
+        { label: 'Jump to Overview & Impact', tag: 'SECTION', action: () => jumpTo('#overview') },
+        { label: 'Jump to Featured Systems', tag: 'SECTION', action: () => jumpTo('#systems') },
+        { label: 'Jump to Technical Stack', tag: 'SECTION', action: () => jumpTo('#stack') },
+        { label: 'Jump to Experience & Education', tag: 'SECTION', action: () => jumpTo('#experience') },
+        { label: 'Jump to Contact', tag: 'SECTION', action: () => jumpTo('#contact') },
+        { label: 'Switch Theme → Neural Violet', tag: 'THEME', action: () => setAccentTheme('violet') },
+        { label: 'Switch Theme → Cyber Cyan', tag: 'THEME', action: () => setAccentTheme('cyan') },
+        { label: 'Switch Theme → Terminal Emerald', tag: 'THEME', action: () => setAccentTheme('emerald') },
+        { label: 'Copy Email Address', tag: 'ACTION', action: () => copyToClipboard(document.getElementById('copy-email-btn').getAttribute('data-email'), 'Email copied to clipboard!') }
+      ];
+
+      function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      function jumpTo(selector) {
+        const el = document.querySelector(selector);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }
+
+      let filteredCmds = [...cmdkCommands];
+
+      function renderCmdkList() {
+        const q = cmdkInput.value.trim().toLowerCase();
+        filteredCmds = cmdkCommands.filter((c) => c.label.toLowerCase().includes(q) || c.tag.toLowerCase().includes(q));
+        if (cmdkIndex >= filteredCmds.length) cmdkIndex = 0;
+
+        if (!filteredCmds.length) {
+          cmdkList.innerHTML = '<div class="px-3 py-6 text-center text-xs font-mono text-slate-500">No matching commands found.</div>';
+          return;
+        }
+
+        cmdkList.innerHTML = filteredCmds.map((c, i) => `
+          <button type="button" data-cmdk-idx="${i}" class="w-full px-3.5 py-2.5 rounded-xl flex items-center justify-between text-left text-xs transition ${i === cmdkIndex ? 'bg-accent-soft text-white border border-accent-soft' : 'text-slate-300 hover:bg-slate-800/70 border border-transparent'}">
+            <span class="font-medium">${c.label}</span>
+            <span class="font-mono text-[10px] px-2 py-0.5 rounded bg-slate-900 text-slate-400 border border-slate-800">${c.tag}</span>
+          </button>
+        `).join('');
+
+        cmdkList.querySelectorAll('[data-cmdk-idx]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const idx = parseInt(btn.getAttribute('data-cmdk-idx'), 10);
+            executeCmdk(idx);
+          });
+        });
+      }
+
+      function openCmdk() {
+        cmdkModal.classList.remove('hidden');
+        cmdkModal.classList.add('flex');
+        cmdkInput.value = '';
+        cmdkIndex = 0;
+        renderCmdkList();
+        setTimeout(() => cmdkInput.focus(), 20);
+      }
+
+      function closeCmdk() {
+        cmdkModal.classList.add('hidden');
+        cmdkModal.classList.remove('flex');
+      }
+
+      function executeCmdk(idx) {
+        const item = filteredCmds[idx];
+        closeCmdk();
+        if (item && typeof item.action === 'function') item.action();
+      }
+
+      document.getElementById('open-cmdk-btn').addEventListener('click', openCmdk);
+      document.getElementById('footer-cmdk-btn').addEventListener('click', openCmdk);
+      cmdkModal.addEventListener('click', (e) => { if (e.target === cmdkModal) closeCmdk(); });
+
+      cmdkInput.addEventListener('input', () => {
+        cmdkIndex = 0;
+        renderCmdkList();
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+          e.preventDefault();
+          cmdkModal.classList.contains('hidden') ? openCmdk() : closeCmdk();
+          return;
+        }
+        if (e.key === 'Escape') {
+          closeCmdk();
+          closeDossier();
+          return;
+        }
+        if (!cmdkModal.classList.contains('hidden')) {
+          if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            cmdkIndex = (cmdkIndex + 1) % Math.max(1, filteredCmds.length);
+            renderCmdkList();
+          } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            cmdkIndex = (cmdkIndex - 1 + filteredCmds.length) % Math.max(1, filteredCmds.length);
+            renderCmdkList();
+          } else if (e.key === 'Enter') {
+            e.preventDefault();
+            executeCmdk(cmdkIndex);
+          }
+        }
+      });
+
+      /* -----------------------------------------------------------------------
+         11. COPY EMAIL, RESUME TOAST & CONTACT FORM VALIDATION
+      ----------------------------------------------------------------------- */
+      const copyEmailBtn = document.getElementById('copy-email-btn');
+      const copyEmailLabel = document.getElementById('copy-email-label');
+
+      copyEmailBtn.addEventListener('click', () => {
+        const email = copyEmailBtn.getAttribute('data-email');
+        if (copyToClipboard(email, 'Email copied to clipboard!')) {
+          copyEmailLabel.textContent = 'Copied!';
+          setTimeout(() => { copyEmailLabel.textContent = 'Copy Email'; }, 2000);
+        }
+      });
+
+      document.getElementById('resume-download-btn').addEventListener('click', () => {
+        showToast('Downloading resume.pdf — place your PDF in the repo root.');
+      });
+
+      const contactForm = document.getElementById('contact-form');
+      contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('cf-name').value.trim();
+        const email = document.getElementById('cf-email').value.trim();
+        const msg = document.getElementById('cf-message').value.trim();
+
+        const validName = name.length > 0;
+        const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        const validMsg = msg.length >= 10;
+
+        document.getElementById('err-name').classList.toggle('hidden', validName);
+        document.getElementById('err-email').classList.toggle('hidden', validEmail);
+        document.getElementById('err-message').classList.toggle('hidden', validMsg);
+
+        if (!validName || !validEmail || !validMsg) return;
+
+        // To connect Formspree/Web3Forms, POST FormData(contactForm) here via fetch()
+        const successBanner = document.getElementById('cf-success');
+        successBanner.classList.remove('hidden');
+        contactForm.reset();
+        showToast('Message transmitted successfully!');
+        setTimeout(() => successBanner.classList.add('hidden'), 6000);
+      });
+
+      // Initial spotlight binding
+      attachSpotlightListeners();
+    });
+  </script>
+</body>
+</html>
